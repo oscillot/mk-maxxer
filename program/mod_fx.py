@@ -7,11 +7,11 @@ class LFOSpeed(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 23
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)
 
 
 class Depth(MicroKorgAbstractParamater):
@@ -20,11 +20,11 @@ class Depth(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 24
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)
 
 
 class Type(MicroKorgAbstractParamater):
@@ -38,8 +38,12 @@ class Type(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(0, 3):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 25
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)
+
+    def _fix_endianness(self):
+        #Need to short-circuit here
+        pass

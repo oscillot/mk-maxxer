@@ -12,11 +12,11 @@ class HiFreq(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(0, 30):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 26
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)
 
 
 class HiGain(MicroKorgAbstractParamater):
@@ -25,11 +25,11 @@ class HiGain(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(0, 64):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 27
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)
 
 
 class LoFreq(MicroKorgAbstractParamater):
@@ -42,11 +42,11 @@ class LoFreq(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(0, 30):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 28
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)
 
 
 class LoGain(MicroKorgAbstractParamater):
@@ -55,8 +55,8 @@ class LoGain(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(0, 64):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 27
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)

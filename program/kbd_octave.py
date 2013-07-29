@@ -7,8 +7,8 @@ class KeyboardOctave(MicroKorgAbstractParamater):
 
     def _check_value(self):
         if self.value not in range(-3, 4):
-            raise ValueError('Parameter is out of range: ' + self.value)
+            raise ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 37
-        self.bits = [range(0, 8)]
+        self.bits = range(0, 8)

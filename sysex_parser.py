@@ -11,7 +11,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 def unpack_sysex(byte):
     return int(hex(ord(byte)), 16)
 
-f_sysex = open(os.path.join(here, 'microkorg-6-30-13.syx'), 'rb')
+f_sysex = open(os.path.join(here, 'sample_data/microkorg-6-30-13.syx'), 'rb')
 
 sysex = f_sysex.read()
 f_sysex.close()

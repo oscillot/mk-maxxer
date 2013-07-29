@@ -36,6 +36,3 @@ nosetests.xml
 
 # Pycharm
 .idea/
-
-# SYSEX Files
-*.syx

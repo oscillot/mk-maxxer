@@ -1,4 +1,5 @@
 from microkorg_abstract import MicroKorgAbstractParamater
+from tn import T1
 
 
 class Sync(MicroKorgAbstractParamater):
@@ -20,24 +21,7 @@ class Sync(MicroKorgAbstractParamater):
 
 class TimeBase(MicroKorgAbstractParamater):
     def __repr__(self):
-        BASES = {
-            0: '1/32',
-            1: '1/28',
-            2: '1/24',
-            3: '1/20',
-            4: '1/18',
-            5: '1/16',
-            6: '1/14',
-            7: '1/12',
-            8: '1/10',
-            9: '1/8',
-            10: '1/6',
-            11: '1/4',
-            12: '1/3',
-            13: '1/2',
-            14: '1/1'
-        }
-        return 'DLY Time Base: %s (THIS MAY BE WRONG!)' % BASES[self.value]
+        return 'DLY Time Base: %s' % T1[self.value]
 
     def _check_value(self):
         if self.value not in range(0, 15):

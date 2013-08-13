@@ -1,4 +1,5 @@
 from microkorg_abstract import MicroKorgAbstractParamater
+from tn import T12
 
 STATES = {
     0: 'Off',
@@ -90,13 +91,7 @@ class ScaleKey(MicroKorgAbstractParamater):
 
 class ScaleType(MicroKorgAbstractParamater):
     def __repr__(self):
-        TYPES = {
-            0: 'Equal Temp'
-        }
-        try:
-            return 'ARP Scale Type: %s' % TYPES[self.value]
-        except KeyError:
-            return 'ARP Scale Type: %d' % self.value
+        return 'ARP Scale Type: %s' % T12[self.value]
 
     def _check_value(self):
         # if self.value not in [0]:

@@ -1,14 +1,10 @@
 from microkorg_abstract import MicroKorgAbstractParamater
-from helpers import slope
+from tn import T10, T11
 
 
 class HiFreq(MicroKorgAbstractParamater):
     def __repr__(self):
-        x1, y1 = 0, 1.00
-        x2, y2 = 29, 18.0
-        freq_scale = slope((x1, y1), (x2, y2))
-
-        return 'EQ Hi Freq: %dKHz' % int(self.value)*freq_scale
+        return 'EQ Hi Freq: %dKHz' % T10[self.value]
 
     def _check_value(self):
         if self.value not in range(0, 30):
@@ -34,11 +30,7 @@ class HiGain(MicroKorgAbstractParamater):
 
 class LoFreq(MicroKorgAbstractParamater):
     def __repr__(self):
-        x1, y1 = 0, 40
-        x2, y2 = 29, 1000
-        freq_scale = slope((x1, y1), (x2, y2))
-
-        return 'EQ Lo Freq: %dHz' % int(self.value)*freq_scale
+        return 'EQ Lo Freq: %dHz' % T11[self.value]
 
     def _check_value(self):
         if self.value not in range(0, 30):

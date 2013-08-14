@@ -1,5 +1,4 @@
 from microkorg_abstract import MicroKorgAbstractParamater
-from tn import T12
 
 STATES = {
     0: 'Off',
@@ -35,10 +34,6 @@ class TriggerPattern(MicroKorgAbstractParamater):
     def _get_offset(self):
         self.offset = 15
         self.bits = range(0, 8)
-
-    def _fix_endianness(self):
-        #Need to short-circuit here
-        pass
 
 
 class VoiceMode(MicroKorgAbstractParamater):
@@ -91,7 +86,7 @@ class ScaleKey(MicroKorgAbstractParamater):
 
 class ScaleType(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Scale Type: %s' % T12[self.value]
+        return 'ARP Scale Type: %s (0=Equal Temp)' % self.value
 
     def _check_value(self):
         # if self.value not in [0]:

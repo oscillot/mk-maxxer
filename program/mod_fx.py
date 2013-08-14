@@ -32,7 +32,8 @@ class Type(MicroKorgAbstractParamater):
         TYPES = {
             0: 'Chorus/Flanger',
             1: 'Ensemble',
-            2: 'Phaser'
+            2: 'Phaser',
+
         }
         return 'MODFX Type: %s' % TYPES[self.value]
 
@@ -43,7 +44,3 @@ class Type(MicroKorgAbstractParamater):
     def _get_offset(self):
         self.offset = 25
         self.bits = range(0, 8)
-
-    def _fix_endianness(self):
-        #Need to short-circuit here
-        pass

@@ -170,7 +170,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
 
     def get_voice_mode(self):
         b = self._get_binary_data()
-        bits = hex(int(b[4:6], 16))[::-1] #[::-1] reverses the string for endianness
+        bits = hex(int(b[4:6], 16))
         # print bits
         return int(bits, 16)
 
@@ -180,4 +180,4 @@ class MicroKorgPGM(MicroKorgAbstractData):
 
     def get_delay_type(self):
         b = self._get_binary_data()
-        return delay_fx.Type([int(r, 2) for r in b[0:3]])
+        return delay_fx.Type(int(b[0:3], 16))

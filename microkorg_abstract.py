@@ -1,7 +1,9 @@
+import os
+import struct
+import traceback
 from bitstring import BitArray
 
-from helpers import endian_translate
-
+here = os.path.abspath(os.path.dirname(__file__))
 
 class MicroKorgAbstractData():
     def read_bytes(self, number=1):
@@ -9,7 +11,11 @@ class MicroKorgAbstractData():
 
     def get_next_bytes(self, number=1):
         byts = self.read_bytes(number)
-        return ord(byts)
+        fmt = '>'
+        for r in range(number):
+            fmt += 'b'
+        #e.g. fmt string might be '>bbb'
+        return struct.unpack(fmt, byts)[0]
 
     def _get_binary_data(self, number=1):
         byte = self.get_next_bytes(number)
@@ -21,15 +27,13 @@ class MicroKorgAbstractParamater():
     def __init__(self, value):
         self.value = value
         self._get_offset()
-        self._fix_endianness()
-        self._check_value()
+        try:
+            self._check_value()
+        except ValueError as e:
+            print traceback.format_exc()
 
     def _check_value(self):
         raise NotImplementedError
 
     def _get_offset(self):
         raise NotImplementedError
-
-    def _fix_endianness(self):
-        if self.bits == range(0, 8):
-            self.value = endian_translate(self.value)

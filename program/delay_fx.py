@@ -65,21 +65,12 @@ class Type(MicroKorgAbstractParamater):
             1: 'Cross Delay',
             2: 'L/R Delay',
         }
-        repr_msg = ''
-        for i, v in enumerate(self.value):
-            if v == 1:
-                repr_msg += 'DLY Type: %s\n' % TYPES[i]
-        return repr_msg
+        return 'DLY Type: %s' % TYPES[self.value]
 
     def _check_value(self):
-        for v in self.value:
-            if v not in [0, 1]:
-                raise ValueError('Parameter is out of range: %d' % v)
+        if self.value not in range(0, 3):
+            ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):
         self.offset = 22
         self.bits = range(0, 8)
-
-    def _fix_endianness(self):
-        #Need to short-circuit here
-        pass

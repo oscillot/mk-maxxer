@@ -184,7 +184,11 @@ class KeySync(MicroKorgAbstractParamater):
 
 class Type(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Type: %s' % T12[self.value]
+        #FIXME
+        try:
+            return 'ARP Type: %s' % T12[self.value]
+        except KeyError:
+            return 'ARP Type: FIXME'
 
     def _check_value(self):
         if self.value not in range(0, 6):

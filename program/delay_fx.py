@@ -65,7 +65,12 @@ class Type(MicroKorgAbstractParamater):
             1: 'Cross Delay',
             2: 'L/R Delay',
         }
-        return 'DLY Type: %s' % TYPES[self.value]
+        #FIXME
+        try:
+            return 'DLY Type: %s' % TYPES[self.value]
+        except KeyError:
+            return 'DLY Type: FIXME'
+
 
     def _check_value(self):
         if self.value not in range(0, 3):

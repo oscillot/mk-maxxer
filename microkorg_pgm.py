@@ -153,13 +153,13 @@ class MicroKorgPGM(MicroKorgAbstractData):
     def get_arp_bmp_32(self):
         b = self._get_binary_data()
         arp_on_off = int(b[7], 16)
-        latch = hex(int(b[6], 16))
-        target = hex(int(b[4:6], 16))
-        key_sync = hex(int(b[0], 16))
-        return arpeggio.OnOff(int(arp_on_off, 16)), \
-            arpeggio.Latch(int(latch, 16)), \
-            arpeggio.Target(int(target, 16)), \
-            arpeggio.KeySync(int(key_sync, 16))
+        latch = int(b[6], 16)
+        target = int(b[4], 16)  # this says 4&5?
+        key_sync = int(b[0], 16)
+        return arpeggio.OnOff(arp_on_off), \
+            arpeggio.Latch(latch), \
+            arpeggio.Target(target), \
+            arpeggio.KeySync(key_sync)
 
     def get_arp_type_and_range(self):
         b = self._get_binary_data()

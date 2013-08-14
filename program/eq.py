@@ -30,7 +30,11 @@ class HiGain(MicroKorgAbstractParamater):
 
 class LoFreq(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'EQ Lo Freq: %dHz' % T11[self.value]
+        #FIXME
+        try:
+            return 'EQ Lo Freq: %dHz' % T11[self.value]
+        except KeyError:
+            return 'EQ Lo Freq: FIXME'
 
     def _check_value(self):
         if self.value not in range(0, 30):

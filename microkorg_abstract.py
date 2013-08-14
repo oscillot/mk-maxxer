@@ -2,11 +2,14 @@ import os
 import struct
 import traceback
 from bitstring import BitArray
+from byte_counter import ByteCounter
 
-here = os.path.abspath(os.path.dirname(__file__))
+bc = ByteCounter()
+
 
 class MicroKorgAbstractData():
     def read_bytes(self, number=1):
+        bc.count(number)
         return self.data.read(number)
 
     def get_next_bytes(self, number=1):
@@ -27,6 +30,7 @@ class MicroKorgAbstractParamater():
     def __init__(self, value):
         self.value = value
         self._get_offset()
+        #This is temp. We will enforce this once all decoding is in line.
         try:
             self._check_value()
         except ValueError as e:

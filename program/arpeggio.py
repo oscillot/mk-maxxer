@@ -1,4 +1,5 @@
 from microkorg_abstract import MicroKorgAbstractParamater
+from tn import T12
 
 STATES = {
     0: 'Off',
@@ -183,11 +184,7 @@ class KeySync(MicroKorgAbstractParamater):
 
 class Type(MicroKorgAbstractParamater):
     def __repr__(self):
-        TYPES = {
-            0: 'Up',
-            5: 'Trigger'
-        }
-        return 'ARP Type: %s' % TYPES[self.value]
+        return 'ARP Type: %s' % T12[self.value]
 
     def _check_value(self):
         if self.value not in range(0, 6):

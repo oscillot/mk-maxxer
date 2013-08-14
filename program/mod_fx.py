@@ -35,7 +35,11 @@ class Type(MicroKorgAbstractParamater):
             2: 'Phaser',
 
         }
-        return 'MODFX Type: %s' % TYPES[self.value]
+        #FIXME
+        try:
+            return 'MODFX Type: %s' % TYPES[self.value]
+        except KeyError:
+            return 'MODFX Type: FIXME'
 
     def _check_value(self):
         if self.value not in range(0, 3):

@@ -1,4 +1,3 @@
-import os
 import struct
 import traceback
 from bitstring import BitArray
@@ -29,12 +28,25 @@ class MicroKorgAbstractData():
 class MicroKorgAbstractParamater():
     def __init__(self, value):
         self.value = value
+        self.mask = set()
+        self._bitmask()
         self._get_offset()
         #This is temp. We will enforce this once all decoding is in line.
         try:
             self._check_value()
         except ValueError as e:
             print traceback.format_exc()
+
+    def _bitmask(self):
+        """
+        This exists to be overwritten in the cases where something that is
+        documented as a byte seems to actually be encoded into a bitmap with
+        a bunch of junk data (possibly leftovers from the synths ms2000
+        origins?) At any rate, bitmasking will allow us to discard the junk
+        data and continue normally.
+        """
+        pass
+
 
     def _check_value(self):
         raise NotImplementedError

@@ -1,3 +1,5 @@
+from bitstring import BitArray
+
 from microkorg_abstract import MicroKorgAbstractParamater
 from tn import T12
 
@@ -184,11 +186,18 @@ class KeySync(MicroKorgAbstractParamater):
 
 class Type(MicroKorgAbstractParamater):
     def __repr__(self):
-        #FIXME
-        try:
-            return 'ARP Type: %s' % T12[self.value]
-        except KeyError:
-            return 'ARP Type: FIXME'
+        return 'ARP Type: %s' % T12[self.value]
+
+    # def _bitmask(self):
+    #     print self.value
+    #     b = BitArray(uint=self.value, length=8)
+    #     bmp = b.bin
+    #     print '>>>>' + bmp
+    #     for m in self.mask:
+    #         bmp[m] = 0
+    #     b2 = BitArray(bin='0b%s' % bmp)
+    #     self.value = b2.int
+    #     print '>>>>%d' % self.value
 
     def _check_value(self):
         if self.value not in range(0, 6):

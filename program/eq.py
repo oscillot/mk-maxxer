@@ -1,3 +1,5 @@
+from bitstring import BitArray
+
 from microkorg_abstract import MicroKorgAbstractParamater
 from tn import T10, T11
 
@@ -30,11 +32,15 @@ class HiGain(MicroKorgAbstractParamater):
 
 class LoFreq(MicroKorgAbstractParamater):
     def __repr__(self):
-        #FIXME
-        try:
-            return 'EQ Lo Freq: %dHz' % T11[self.value]
-        except KeyError:
-            return 'EQ Lo Freq: FIXME'
+        return 'EQ Lo Freq: %dHz' % T11[self.value]
+
+    def _bitmask(self):
+        b = BitArray(uint=self.value, length=8)
+        keep = b.bin[0:5]
+        discard = b.bin[5:] #might need this later?
+        new_bin = keep[::-1].zfill(8)
+        b2 = BitArray(bin='0b%s' % new_bin)
+        self.value = b2.int
 
     def _check_value(self):
         if self.value not in range(0, 30):

@@ -31,11 +31,7 @@ class MicroKorgAbstractParamater():
         self.mask = set()
         self._bitmask()
         self._get_offset()
-        #This is temp. We will enforce this once all decoding is in line.
-        try:
-            self._check_value()
-        except ValueError as e:
-            print traceback.format_exc()
+        self._check_value()
 
     def _bitmask(self):
         """

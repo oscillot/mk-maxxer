@@ -44,7 +44,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         #byte 19 !!!BITMAP
         delay_sync, delay_time_base = self.get_delay_sync_and_time_base()
         self.delay_sync = delay_fx.Sync(delay_sync)
-        self.delay_time_base - delay_fx.TimeBase(delay_time_base)
+        self.delay_time_base = delay_fx.TimeBase(delay_time_base)
         print self.delay_sync
         print self.delay_time_base
         #byte 20

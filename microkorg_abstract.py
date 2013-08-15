@@ -52,4 +52,8 @@ class MicroKorgAbstractParamater():
         raise NotImplementedError
 
     def _get_offset(self):
+        """
+        I did this so I wouldn't forget to set the offset. It's totally
+        unnecessary to do this this way and will likely go away eventually
+        """
         raise NotImplementedError

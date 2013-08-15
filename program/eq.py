@@ -1,7 +1,7 @@
 from bitstring import BitArray
 
 from microkorg_abstract import MicroKorgAbstractParamater
-from tn import T10, T11
+from constants import T10, T11
 
 
 class HiFreq(MicroKorgAbstractParamater):

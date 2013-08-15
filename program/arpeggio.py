@@ -1,12 +1,5 @@
-from bitstring import BitArray
-
 from microkorg_abstract import MicroKorgAbstractParamater
-from tn import T12
-
-STATES = {
-    0: 'Off',
-    1: 'On'
-}
+from constants import STATES, T12
 
 
 class TriggerLength(MicroKorgAbstractParamater):

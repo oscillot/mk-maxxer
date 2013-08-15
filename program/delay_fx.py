@@ -1,15 +1,11 @@
 from bitstring import BitArray
 
 from microkorg_abstract import MicroKorgAbstractParamater
-from tn import T1
+from constants import STATES, T1
 
 
 class Sync(MicroKorgAbstractParamater):
     def __repr__(self):
-        STATES = {
-            0: 'Off',
-            1: 'On'
-        }
         return 'DLY Sync: %s' % STATES[self.value]
 
     def _check_value(self):

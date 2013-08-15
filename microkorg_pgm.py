@@ -23,14 +23,17 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.arp_trigger_length = arpeggio.TriggerLength(self.get_next_bytes())
         print self.arp_trigger_length
         #byte 15
-        self.arp_trigger_pattern = self.get_arp_trigger_pattern()
+        self.arp_trigger_pattern = arpeggio.TriggerPattern(
+            self.get_arp_trigger_pattern())
         print self.arp_trigger_pattern
 
         #byte 16 !!!BITMAP
         self.voice_mode = arpeggio.VoiceMode(self.get_voice_mode())
         print self.voice_mode
         #byte 17 !!!BITMAP
-        self.scale_key, self.scale_type = self.get_scale_key_and_type()
+        scale_key, scale_type = self.get_scale_key_and_type()
+        self.scale_key = arpeggio.ScaleKey(scale_key)
+        self.scale_type = arpeggio.ScaleType(scale_type)
         print self.scale_key
         print self.scale_type
         #byte 18 (dummy)
@@ -39,8 +42,9 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print 'DELAY FX'
         ##DELAY FX
         #byte 19 !!!BITMAP
-        self.delay_sync, self.delay_time_base = self\
-            .get_delay_sync_and_time_base()
+        delay_sync, delay_time_base = self.get_delay_sync_and_time_base()
+        self.delay_sync = delay_fx.Sync(delay_sync)
+        self.delay_time_base - delay_fx.TimeBase(delay_time_base)
         print self.delay_sync
         print self.delay_time_base
         #byte 20
@@ -50,7 +54,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.delay_depth = delay_fx.Depth(self.get_next_bytes())
         print self.delay_depth
         #byte 22
-        self.delay_type = self.get_delay_type()
+        self.delay_type = delay_fx.Type(self.get_delay_type())
         print self.delay_type
 
         print 'MOD FX'
@@ -89,14 +93,19 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.arp_tempo_lsb = arpeggio.TempoLSB(self.get_next_bytes())
         print self.arp_tempo_lsb
         #byte 32 !!!BITMAP
-        self.arp_on_off, self.arp_latch, self.arp_target, self.arp_key_sync =\
-            self.get_arp_bmp_32()
+        arp_on_off, arp_latch, arp_target, arp_key_sync = self.get_arp_bmp_32()
+        self.arp_on_off = arpeggio.OnOff(arp_on_off)
+        self.arp_latch = arpeggio.Latch(arp_latch)
+        self.arp_target = arpeggio.Target(arp_target)
+        self.arp_key_sync = arpeggio.KeySync(arp_key_sync)
         print self.arp_on_off
         print self.arp_latch
         print self.arp_target
         print self.arp_key_sync
         #byte 33 !!!BITMAP
-        self.arp_type, self.arp_range = self.get_arp_type_and_range()
+        arp_type, arp_range = self.get_arp_type_and_range()
+        self.arp_type = arpeggio.Type(arp_type)
+        self.arp_range = arpeggio.Range(arp_range)
         print self.arp_type
         print self.arp_range
         #byte 34
@@ -140,15 +149,13 @@ class MicroKorgPGM(MicroKorgAbstractData):
         b = self._get_binary_data()
         scale_key = hex(int(b[0:4], 16))
         scale_type = hex(int(b[4:], 16))
-        return arpeggio.ScaleKey(int(scale_key, 16)), arpeggio.ScaleType(int(
-            scale_type, 16))
+        return int(scale_key, 16), int(scale_type, 16)
 
     def get_delay_sync_and_time_base(self):
         b = self._get_binary_data()
         delay_sync = b[7]
         delay_time_base = b[0:3]
-        return delay_fx.Sync(int(delay_sync)), \
-            delay_fx.TimeBase(int(delay_time_base))
+        return int(delay_sync), int(delay_time_base)
 
     def get_arp_bmp_32(self):
         b = self._get_binary_data()
@@ -156,17 +163,13 @@ class MicroKorgPGM(MicroKorgAbstractData):
         latch = int(b[6], 16)
         target = int(b[4], 16)  # this says 4&5?
         key_sync = int(b[0], 16)
-        return arpeggio.OnOff(arp_on_off), \
-            arpeggio.Latch(latch), \
-            arpeggio.Target(target), \
-            arpeggio.KeySync(key_sync)
+        return arp_on_off, latch, target, key_sync
 
     def get_arp_type_and_range(self):
         b = self._get_binary_data()
         arp_type = hex(int(b[0:4], 16))
         arp_range = hex(int(b[4:], 16))
-        return arpeggio.Type(int(arp_type, 16)), \
-            arpeggio.Range(int(arp_range, 16))
+        return int(arp_type, 16), int(arp_range, 16)
 
     def get_voice_mode(self):
         b = self._get_binary_data()
@@ -176,8 +179,8 @@ class MicroKorgPGM(MicroKorgAbstractData):
 
     def get_arp_trigger_pattern(self):
         b = self._get_binary_data()
-        return arpeggio.TriggerPattern([int(t, 16) for t in b])
+        return [int(t, 16) for t in b]
 
     def get_delay_type(self):
         b = self._get_binary_data()
-        return delay_fx.Type(int(b[0:3], 16))
+        return int(b[0:3], 16)

@@ -90,3 +90,15 @@ class KeyPriority(MicroKorgAbstractParamater):
     def _get_offset(self):
         self.offset = 1
         self.bits = [0, 1]
+
+
+class UnisonDetune(MicroKorgAbstractParamater):
+    def __repr__(self):
+        return 'SYN Unison Detune: %s [cent]' % self.value
+
+    def _check_value(self):
+        if self.value not in range(0, 101):
+            raise ValueError('Parameter is out of range: %d' % self.value)
+
+    def _get_offset(self):
+        self.offset = 2

@@ -2,6 +2,7 @@ import StringIO
 
 from microkorg_abstract import MicroKorgAbstractData
 
+from timbre import *
 
 class MicroKorgTimbreData(MicroKorgAbstractData):
     def __init__(self, data):
@@ -9,121 +10,134 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
 
         print 'GENERAL'
         #byte offset 0
-        self.midi_channel = self.get_next_bytes()
-        print 'MIDI Channel: %s' % self.midi_channel
+        self.midi_channel = timbre.MidiChannel(self.get_next_bytes())
+        print self.midi_channel
         #byte offset 1 !!!BITMAP
-        self.assign_mode, self.eg2_reset, self.eg1_reset, self.trigger_mode, \
-            self.key_priority = self.get_bmp1_values()
-        print 'Assign Mode: %s' % self.assign_mode
-        print 'EG2 Reset: %s' % self.eg2_reset
-        print 'EG1 Reset: %s' % self.eg1_reset
-        print 'Trigger Mode: %s' % self.trigger_mode
+        assign_mode, eg2_reset, eg1_reset, trigger_mode, key_priority = \
+            self.get_bmp1_values()
+        self.assign_mode = timbre.AssignMode(assign_mode)
+        self.eg2_reset = timbre.EG2Reset(eg2_reset)
+        self.eg1_reset = timbre.EG1Reset(eg1_reset)
+        self.trigger_mode = timbre.TriggerMode(trigger_mode)
+        self.key_priority = timbre.KeyPriority(key_priority)
+        print self.assign_mode
+        print self.eg2_reset
+        print self.eg1_reset
+        print self.trigger_mode
+        print self.key_priority
         #byte offset 2
-        self.unison_detune = self.get_next_bytes()
-        print 'Unison Detune: %s' % self.unison_detune
+        self.unison_detune = timbre.UnisonDetune(self.get_next_bytes())
+        print self.unison_detune
 
         print 'PITCH'
         ##PITCH
         #byte offset 3
-        self.pitch_tune = self.get_next_bytes()
-        print 'Pitch Tune: %s' % self.pitch_tune
+        self.pitch_tune = pitch.Tune(self.get_next_bytes())
+        print self.pitch_tune
         #byte offset 4
-        self.pitch_bend_range = self.get_next_bytes()
-        print 'Pitch Bend Range: %s' % self.pitch_bend_range
+        self.pitch_bend_range = pitch.BendRange(self.get_next_bytes())
+        print self.pitch_bend_range
         #byte offset 5
-        self.pitch_transpose = self.get_next_bytes()
-        print 'Pitch Transpose: %s' % self.pitch_transpose
+        self.pitch_transpose = pitch.Transpose(self.get_next_bytes())
+        print self.pitch_transpose
         #byte offset 6
-        self.pitch_vibrato_int = self.get_next_bytes()
-        print 'Pitch Vibrato Int: %s' % self.pitch_vibrato_int
+        self.pitch_vibrato_int = pitch.VibratoInt(self.get_next_bytes())
+        print self.pitch_vibrato_int
 
         print 'OSC1'
         ##OSC1
         #byte offset 7
-        self.osc1_wave = self.get_next_bytes()
-        print 'OSC1 Wave: %s' % self.osc1_wave
+        self.osc1_wave = osc1.Wave(self.get_next_bytes())
+        self.osc1_wave
         #byte offset 8
-        self.osc1_waveform_ctrl1 = self.get_next_bytes()
-        print 'OSC1 Waveform CTRL1: %s' % self.osc1_waveform_ctrl1
+        self.osc1_waveform_ctrl1 = osc1.WaveformCTRL1(self.get_next_bytes())
+        self.osc1_waveform_ctrl1
         #byte offset 9
-        self.osc1_waveform_ctrl2 = self.get_next_bytes()
-        print 'OSC1 Waveform CTRL2: %s' % self.osc1_waveform_ctrl2
+        self.osc1_waveform_ctrl2 = osc1.WaveformCTRL2(self.get_next_bytes())
+        self.osc1_waveform_ctrl2
         #byte offset 10
-        self.osc1_dwgs_wave = self.get_next_bytes()
+        self.osc1_dwgs_wave = osc1.DWGSWave(self.get_next_bytes())
         print 'OSC1 DWGS Wave: %s' % self.osc1_dwgs_wave
         #byte offset 11 (dummy)
-        self.get_next_bytes()
+        self.read_bytes(1)
 
         print 'OSC2'
         ##OSC2
         #byte offset 12 !!!BITMAP
-        self.osc2_wave, self.osc2_mod_select = self.get_osc2_wave_and_mod()
-        print 'OSC2 Wave: %s' % self.osc2_wave
-        print 'OSC2 Mod Select: %s' % self.osc2_mod_select
+        osc2_wave, osc2_mod_select = self.get_osc2_wave_and_mod()
+        self.osc2_wave = osc2.Wave(osc2_wave)
+        self.osc2_mod_select = osc2.ModSelect(osc2_mod_select)
+        print self.osc2_wave
+        print self.osc2_mod_select
         #byte offset 13
-        self.osc2_semitone = self.get_next_bytes()
-        print 'OSC2 Semitone: %s' % self.osc2_semitone
+        self.osc2_semitone = osc2.Semitone(self.get_next_bytes())
+        print self.osc2_semitone
         #byte offset 14
-        self.osc2_tune = self.get_next_bytes()
-        print 'OSC2 Tune: %s' % self.osc2_tune
+        self.osc2_tune = osc2.Tune(self.get_next_bytes())
+        print self.osc2_tune
 
         print 'PITCH'
         ##PITCH
         #byte offset 15
-        self.pitch_portamento_time = self.get_next_bytes()
-        print 'PITCH Portamento Time: %s' % self.pitch_portamento_time
+        self.pitch_portamento_time = pitch.PortamentoTime(
+            self.get_next_bytes())
+        print self.pitch_portamento_time
 
         print 'MIXER'
         ##MIXER
         #byte offset 16
-        self.osc1_level = self.get_next_bytes()
-        print 'OSC1 Level: %s' % self.osc1_level
+        self.osc1_level = mixer.OSC1Level(self.get_next_bytes())
+        print self.osc1_level
         #byte offset 17
-        self.osc2_level = self.get_next_bytes()
-        print 'OSC2 Level: %s' % self.osc2_level
+        self.osc2_level = mixer.OSC2Level(self.get_next_bytes())
+        print self.osc2_level
         #byte offset 18
-        self.noise_level = self.get_next_bytes()
-        print 'Noise Level: %s' % self.noise_level
+        self.noise_level = mixer.Noise(self.get_next_bytes())
+        print self.noise_level
 
         print 'FILTER'
         ##FILTER
         #byte offset 19
-        self.filter_type = self.get_next_bytes()
-        print 'Filter Type: %s' % self.filter_type
+        self.filter_type = filter.Type(self.get_next_bytes())
+        print self.filter_type
         #byte offset 20
-        self.filter_cutoff = self.get_next_bytes()
-        print 'Filter Cutoff: %s' % self.filter_cutoff
+        self.filter_cutoff = filter.Cutoff(self.get_next_bytes())
+        print self.filter_cutoff
         #byte offset 21
-        self.filter_resonance = self.get_next_bytes()
-        print 'Filter Resonance: %s' % self.filter_resonance
+        self.filter_resonance = filter.Resonance(self.get_next_bytes())
+        print self.filter_resonance
         #byte offset 22
-        self.filter_eg1_intensity = self.get_next_bytes()
-        print 'Filter EG1 Intensity: %s' % self.filter_eg1_intensity
+        self.filter_eg1_intensity = filter.EG1Intensity(self.get_next_bytes())
+        print self.filter_eg1_intensity
         #byte offset 23
-        self.filter_velocity_sense = self.get_next_bytes()
-        print 'Filter Velocity Sense: %s' % self.filter_velocity_sense
+        self.filter_velocity_sense = filter.VelocitySense(
+            self.get_next_bytes())
+        print self.filter_velocity_sense
         #byte offset 24
-        self.filter_keyboard_track = self.get_next_bytes()
-        print 'Filter Keyboard Track: %s' % self.filter_keyboard_track
+        self.filter_keyboard_track = filter.KeyboardTrack(
+            self.get_next_bytes())
+        print self.filter_keyboard_track
 
         print 'AMP'
         ##AMP
         #byte offset 25
-        self.amp_level = self.get_next_bytes()
-        print 'AMP Level: %s' % self.amp_level
+        self.amp_level = amp.Level(self.get_next_bytes())
+        print self.amp_level
         #byte offset 26
-        self.amp_panpot = self.get_next_bytes()
-        print 'AMP Panpot: %s' % self.amp_panpot
+        self.amp_panpot = amp.Panpot(self.get_next_bytes())
+        print self.amp_panpot
         #byte offset 27 !!!BITMAP
-        self.amp_sw, self.amp_distortion = self.get_amp_sw_and_distortion()
-        print 'AMP SW: %s' % self.amp_sw
-        print 'AMP Distortion: %s' % self.amp_distortion
+        amp_sw, amp_distortion = self.get_amp_sw_and_distortion()
+        self.amp_sw = amp.AmpSW(amp_sw)
+        self.amp_distortion = amp.Distortion(amp_distortion)
+        print self.amp_sw
+        print self.amp_distortion
         #byte offset 28
-        self.amp_velocity_sense = self.get_next_bytes()
-        print 'AMP Velocity Sense: %s' % self.amp_velocity_sense
+        self.amp_velocity_sense = amp.VelocitySense(self.get_next_bytes())
+        print self.amp_velocity_sense
         #byte offset 29
-        self.amp_keyboard_track = self.get_next_bytes()
-        print 'AMP Keyboard Track: %s' % self.amp_keyboard_track
+        self.amp_keyboard_track = amp.KeyboardTrack(self.get_next_bytes())
+        print self.amp_keyboard_track
 
         print 'EG1'
         ##EG1

@@ -6,11 +6,11 @@ from constants import STATES, T1
 
 class Sync(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'DLY Sync: %s' % STATES[self.value]
+        return 'DLY Sync: %s' % STATES[self.value.int]
 
     def _check_value(self):
-        if self.value not in [0, 1]:
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.int not in [0, 1]:
+            raise ValueError('Parameter is out of range: %d' % self.value.int)
 
     def _get_offset(self):
         self.offset = 19
@@ -19,11 +19,11 @@ class Sync(MicroKorgAbstractParamater):
 
 class TimeBase(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'DLY Time Base: %s' % T1[self.value]
+        return 'DLY Time Base: %s' % T1[self.value.int]
 
     def _check_value(self):
-        if self.value not in range(0, 15):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.int not in range(0, 15):
+            raise ValueError('Parameter is out of range: %d' % self.value.int)
 
     def _get_offset(self):
         self.offset = 19
@@ -59,22 +59,15 @@ class Depth(MicroKorgAbstractParamater):
 class Type(MicroKorgAbstractParamater):
     def __repr__(self):
         TYPES = {
-            0: 'Stereo Delay',
-            1: 'Cross Delay',
-            2: 'L/R Delay',
+            '000': 'No Delay',
+            '100': 'Stereo Delay',
+            '010': 'Cross Delay',
+            '001': 'L/R Delay',
         }
-        return 'DLY Type: %s' % TYPES[self.value]
-
-    def _bitmask(self):
-        b = BitArray(uint=self.value, length=8)
-        keep = b.bin[0:2]
-        discard = b.bin[2:] #might need this later?
-        new_bin = keep[::-1].zfill(8)
-        b2 = BitArray(bin='0b%s' % new_bin)
-        self.value = b2.int
+        return 'DLY Type: %s' % TYPES[self.value.bin]
 
     def _check_value(self):
-        if self.value not in range(0, 3):
+        if self.value.bin not in ['000', '100', '010', '001']:
             ValueError('Parameter is out of range: %d' % self.value)
 
     def _get_offset(self):

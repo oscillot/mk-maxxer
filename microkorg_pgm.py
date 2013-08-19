@@ -147,40 +147,42 @@ class MicroKorgPGM(MicroKorgAbstractData):
 
     def get_scale_key_and_type(self):
         b = self._get_binary_data()
-        scale_key = hex(int(b[0:4], 16))
-        scale_type = hex(int(b[4:], 16))
-        return int(scale_key, 16), int(scale_type, 16)
+        scale_key = BitArray(bin=b[0:4])
+        scale_type = BitArray(bin=b[4:])
+        return scale_key, scale_type
 
     def get_delay_sync_and_time_base(self):
         b = self._get_binary_data()
-        delay_sync = b[7]
-        delay_time_base = b[0:3]
-        return int(delay_sync), int(delay_time_base)
+        delay_sync = BitArray(bin=b[7])
+        delay_time_base = BitArray(bin=b[0:3])
+        return delay_sync, delay_time_base
 
     def get_arp_bmp_32(self):
         b = self._get_binary_data()
-        arp_on_off = int(b[7], 16)
-        latch = int(b[6], 16)
-        target = int(b[4], 16)  # this says 4&5?
-        key_sync = int(b[0], 16)
+        arp_on_off = BitArray(bin=b[7])
+        latch = BitArray(bin=b[6])
+        target = BitArray(bin=b[4:6])  # this says 4&5?
+        key_sync = BitArray(bin=b[0])
         return arp_on_off, latch, target, key_sync
 
     def get_arp_type_and_range(self):
         b = self._get_binary_data()
-        arp_type = hex(int(b[0:4], 16))
-        arp_range = hex(int(b[4:], 16))
-        return int(arp_type, 16), int(arp_range, 16)
+        arp_type = BitArray(bin=b[0:4])
+        arp_range = BitArray(bin=b[4:])
+        return arp_type, arp_range
 
     def get_voice_mode(self):
         b = self._get_binary_data()
-        bits = hex(int(b[4:6], 16))
-        # print bits
-        return int(bits, 16)
+        bits = BitArray(bin=b[4:6])
+        return bits
 
     def get_arp_trigger_pattern(self):
         b = self._get_binary_data()
-        return [int(t, 16) for t in b]
+        # return [int(t, 16) for t in b]
+        arp_trigger_pattern = BitArray(bin=b)
+        return arp_trigger_pattern
 
     def get_delay_type(self):
         b = self._get_binary_data()
-        return int(b[0:3], 16)
+        delay_type = BitArray(bin=b[0:3])
+        return delay_type

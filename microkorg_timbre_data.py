@@ -1,4 +1,5 @@
 import StringIO
+from bitstring import BitArray
 
 from microkorg_abstract import MicroKorgAbstractData
 
@@ -238,40 +239,40 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
 
     def get_bmp1_values(self):
         b = self._get_binary_data()
-        key_priority = hex(int(b[0:2], 16))
-        trigger_mode = hex(int(b[3], 16))
-        eg1_reset = hex(int(b[4], 16))
-        eg2_reset = hex(int(b[5], 16))
-        assign_mode = hex(int(b[6:], 16))
+        key_priority = BitArray(b[0:2])
+        trigger_mode = BitArray(bin=b[3])
+        eg1_reset = BitArray(bin=b[4])
+        eg2_reset = BitArray(bin=b[5])
+        assign_mode = BitArray(bin=b[6:])
         return assign_mode, eg2_reset, eg1_reset, \
             trigger_mode, key_priority
 
     def get_osc2_wave_and_mod(self):
         b = self._get_binary_data()
-        wave = hex(int(b[0:2], 16))
-        mod_select = hex(int(b[4:6], 16))
+        wave = BitArray(bin=b[0:2])
+        mod_select = BitArray(bin=b[4:6])
         return wave, mod_select
 
     def get_amp_sw_and_distortion(self):
         b = self._get_binary_data()
-        sw = hex(int(b[6], 16))
-        distortion = hex(int(b[0], 16))
+        sw = BitArray(bin=b[6])
+        distortion = BitArray(bin=b[0])
         return sw, distortion
 
     def get_lfo_key_sync_and_wave(self):
         b = self._get_binary_data()
-        key_sync = hex(int(b[4:6], 16))
-        wave = hex(int(b[0:2], 16))
+        key_sync = BitArray(bin=b[4:6])
+        wave = BitArray(bin=b[0:2])
         return key_sync, wave
 
     def get_lfo_tempo_sync_and_sync_note(self):
         b = self._get_binary_data()
-        tempo_sync = hex(int(b[7], 16))
-        sync_note = hex(int(b[0:5], 16))
+        tempo_sync = BitArray(bin=b[7])
+        sync_note = BitArray(bin=b[0:5])
         return tempo_sync, sync_note
 
     def get_patch_destination_and_source(self):
         b = self._get_binary_data()
-        destination = hex(int(b[4:], 16))
-        source = hex(int(b[0:4], 16))
+        destination = BitArray(bin=b[4:])
+        source = BitArray(bin=b[0:4])
         return destination, source

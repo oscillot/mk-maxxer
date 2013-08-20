@@ -6,6 +6,7 @@ class KeyboardOctave(MicroKorgAbstractParamater):
         return 'KBD Octave: Shift %d Octave(s)' % self.value
 
     def _check_value(self):
+        print self.value.bin
         if self.value not in range(-3, 4):
             raise ValueError('Parameter is out of range: %d' % self.value)
 

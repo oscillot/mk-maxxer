@@ -37,19 +37,11 @@ class Type(MicroKorgAbstractParamater):
             2: 'Phaser',
 
         }
-        return 'MODFX Type: %s' % TYPES[self.value]
-
-    def _bitmask(self):
-        b = BitArray(uint=self.value, length=8)
-        keep = b.bin[0:2]
-        discard = b.bin[2:] #might need this later?
-        new_bin = keep[::-1].zfill(8)
-        b2 = BitArray(bin='0b%s' % new_bin)
-        self.value = b2.int
+        return 'MODFX Type: %s' % TYPES[self.value.int]
 
     def _check_value(self):
-        if self.value not in range(0, 3):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.int not in range(0, 3):
+            raise ValueError('Parameter is out of range: %d' % self.value.int)
 
     def _get_offset(self):
         self.offset = 25

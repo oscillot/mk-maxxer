@@ -66,7 +66,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.mod_depth = mod_fx.Depth(self.get_next_bytes())
         print self.mod_depth
         #byte 25
-        self.mod_type = mod_fx.Type(self.get_next_bytes())
+        self.mod_type = mod_fx.Type(self.get_mod_type())
         print self.mod_type
 
         print 'EQ'
@@ -78,7 +78,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.eq_hi_gain = eq.HiGain(self.get_next_bytes())
         print self.eq_hi_gain
         #byte 28
-        self.eq_low_freq = eq.LoFreq(self.get_next_bytes())
+        self.eq_low_freq = eq.LoFreq(self.get_eq_low_freq())
         print self.eq_low_freq
         #byte 29
         self.eq_low_gain = eq.LoGain(self.get_next_bytes())
@@ -157,6 +157,11 @@ class MicroKorgPGM(MicroKorgAbstractData):
         delay_time_base = BitArray(bin=b[0:3])
         return delay_sync, delay_time_base
 
+    def get_eq_low_freq(self):
+        b = self._get_binary_data()
+        eq_low_freq = BitArray(bin=b[0:6])
+        return eq_low_freq
+
     def get_arp_bmp_32(self):
         b = self._get_binary_data()
         arp_on_off = BitArray(bin=b[7])
@@ -186,3 +191,8 @@ class MicroKorgPGM(MicroKorgAbstractData):
         b = self._get_binary_data()
         delay_type = BitArray(bin=b[0:3])
         return delay_type
+
+    def get_mod_type(self):
+        b = self._get_binary_data()
+        mod_type = BitArray(bin=b[0:3])
+        return mod_type

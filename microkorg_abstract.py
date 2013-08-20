@@ -17,12 +17,14 @@ class MicroKorgAbstractData():
         for r in range(number):
             fmt += 'b'
         #e.g. fmt string might be '>bbb'
-        return struct.unpack(fmt, byts)[0]
+        data = struct.unpack(fmt, byts)[0]
+        b = BitArray(uint=data, length=number)
+        return b
 
-    def _get_binary_data(self, number=1):
-        byte = self.get_next_bytes(number)
-        b = BitArray(uint=byte, length=8)
-        return b.bin.zfill(8*number)
+    # def _get_binary_data(self, number=1):
+    #     byte = self.get_next_bytes(number)
+    #     b = BitArray(uint=byte, length=8)
+    #     return b.bin.zfill(8*number)
 
 
 class MicroKorgAbstractParamater():

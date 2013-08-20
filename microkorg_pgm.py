@@ -146,24 +146,24 @@ class MicroKorgPGM(MicroKorgAbstractData):
             self.data.read(111)
 
     def get_scale_key_and_type(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         scale_key = BitArray(bin=b[0:4])
         scale_type = BitArray(bin=b[4:])
         return scale_key, scale_type
 
     def get_delay_sync_and_time_base(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         delay_sync = BitArray(bin=b[7])
         delay_time_base = BitArray(bin=b[0:3])
         return delay_sync, delay_time_base
 
     def get_eq_low_freq(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         eq_low_freq = BitArray(bin=b[0:6])
         return eq_low_freq
 
     def get_arp_bmp_32(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         arp_on_off = BitArray(bin=b[7])
         latch = BitArray(bin=b[6])
         target = BitArray(bin=b[4:6])  # this says 4&5?
@@ -171,28 +171,28 @@ class MicroKorgPGM(MicroKorgAbstractData):
         return arp_on_off, latch, target, key_sync
 
     def get_arp_type_and_range(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         arp_type = BitArray(bin=b[0:4])
         arp_range = BitArray(bin=b[4:])
         return arp_type, arp_range
 
     def get_voice_mode(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         bits = BitArray(bin=b[4:6])
         return bits
 
     def get_arp_trigger_pattern(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         # return [int(t, 16) for t in b]
         arp_trigger_pattern = BitArray(bin=b)
         return arp_trigger_pattern
 
     def get_delay_type(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         delay_type = BitArray(bin=b[0:3])
         return delay_type
 
     def get_mod_type(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         mod_type = BitArray(bin=b[0:3])
         return mod_type

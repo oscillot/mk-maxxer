@@ -1,16 +1,14 @@
-from bitstring import BitArray
-
 from microkorg_abstract import MicroKorgAbstractParamater
 from constants import STATES, T1
 
 
 class Sync(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'DLY Sync: %s' % STATES[self.value.int]
+        return 'DLY Sync: %s' % STATES[self.value.intle]
 
     def _check_value(self):
-        if self.value.int not in [0, 1]:
-            raise ValueError('Parameter is out of range: %d' % self.value.int)
+        if self.value.intle not in [0, 1]:
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 19
@@ -19,11 +17,11 @@ class Sync(MicroKorgAbstractParamater):
 
 class TimeBase(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'DLY Time Base: %s' % T1[self.value.int]
+        return 'DLY Time Base: %s' % T1[self.value.intle]
 
     def _check_value(self):
-        if self.value.int not in range(0, 15):
-            raise ValueError('Parameter is out of range: %d' % self.value.int)
+        if self.value.intle not in range(0, 15):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 19
@@ -48,8 +46,9 @@ class Depth(MicroKorgAbstractParamater):
         return 'DLY Depth: %s' % self.value
 
     def _check_value(self):
-        if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 128):
+            raise ValueError('Parameter is out of range: %d' % self.value
+            .intle)
 
     def _get_offset(self):
         self.offset = 21
@@ -59,16 +58,16 @@ class Depth(MicroKorgAbstractParamater):
 class Type(MicroKorgAbstractParamater):
     def __repr__(self):
         TYPES = {
-            '000': 'No Delay',
-            '100': 'Stereo Delay',
-            '010': 'Cross Delay',
-            '001': 'L/R Delay',
+            0: 'No Delay',
+            4: 'Stereo Delay',
+            2: 'Cross Delay',
+            1: 'L/R Delay',
         }
-        return 'DLY Type: %s' % TYPES[self.value.bin]
+        return 'DLY Type: %s' % TYPES[self.value.intle]
 
     def _check_value(self):
-        if self.value.bin not in ['000', '100', '010', '001']:
-            ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in [0, 4, 2, 1]:
+            ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 22

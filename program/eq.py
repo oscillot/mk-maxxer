@@ -1,16 +1,14 @@
-from bitstring import BitArray
-
 from microkorg_abstract import MicroKorgAbstractParamater
 from constants import T10, T11
 
 
 class HiFreq(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'EQ Hi Freq: %dKHz' % T10[self.value]
+        return 'EQ Hi Freq: %dKHz' % T10[self.value.intle]
 
     def _check_value(self):
-        if self.value not in range(0, 30):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 30):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 26
@@ -22,8 +20,8 @@ class HiGain(MicroKorgAbstractParamater):
         return 'EQ Hi Gain: %s+/-12 (64=0?)' % self.value
 
     def _check_value(self):
-        if self.value not in range(0, 64):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 64):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 27
@@ -48,8 +46,8 @@ class LoGain(MicroKorgAbstractParamater):
         return 'EQ Lo Gain: %s+/-12 (64=0?)' % self.value
 
     def _check_value(self):
-        if self.value not in range(0, 64):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 64):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 27

@@ -1,4 +1,5 @@
 import StringIO
+from bitstring import BitStream
 
 from microkorg_abstract import MicroKorgAbstractData
 from microkorg_timbre_data import MicroKorgTimbreData
@@ -24,7 +25,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print self.arp_trigger_length
         #byte 15
         self.arp_trigger_pattern = arpeggio.TriggerPattern(
-            self.get_arp_trigger_pattern())
+            self.get_next_bytes())
         print self.arp_trigger_pattern
 
         #byte 16 !!!BITMAP
@@ -145,54 +146,62 @@ class MicroKorgPGM(MicroKorgAbstractData):
             #bytes 142-253 (dummy if vocoder)
             self.data.read(111)
 
+    def get_voice_mode(self):
+        b = self.get_next_bytes()
+        data = b.bin[4:6]
+        voice_mode = BitStream(bin='0b000000%s' % data)
+        return voice_mode
+
     def get_scale_key_and_type(self):
         b = self.get_next_bytes()
-        scale_key = BitArray(bin=b[0:4])
-        scale_type = BitArray(bin=b[4:])
+        key_data = b.bin[0:4]
+        type_data = b.bin[4:]
+        scale_key = BitStream(bin='0b0000%s' % key_data)
+        scale_type = BitStream(bin='0b0000%s' % type_data)
         return scale_key, scale_type
 
     def get_delay_sync_and_time_base(self):
         b = self.get_next_bytes()
-        delay_sync = BitArray(bin=b[7])
-        delay_time_base = BitArray(bin=b[0:3])
+        sync_data = b.bin[7]
+        time_base_data = b.bin[0:3]
+        delay_sync = BitStream(bin='0b0000000%s' % sync_data)
+        delay_time_base = BitStream(bin='0b00000%s' % time_base_data)
         return delay_sync, delay_time_base
 
     def get_eq_low_freq(self):
         b = self.get_next_bytes()
-        eq_low_freq = BitArray(bin=b[0:6])
+        low_freq_data = b.bin[0:6]
+        eq_low_freq = BitStream(bin='0b00%s' % low_freq_data)
         return eq_low_freq
 
     def get_arp_bmp_32(self):
         b = self.get_next_bytes()
-        arp_on_off = BitArray(bin=b[7])
-        latch = BitArray(bin=b[6])
-        target = BitArray(bin=b[4:6])  # this says 4&5?
-        key_sync = BitArray(bin=b[0])
+        on_off_data = b.bin[7]
+        latch_data = b.bin[6]
+        target_data = b.bin[4:6]  # this says 4&5?
+        key_sync_data = b.bin[0]
+        arp_on_off = BitStream(bin='0b0000000%s' % on_off_data)
+        latch = BitStream(bin='0b0000000%s' % latch_data)
+        target = BitStream(bin='0b000000%s' % target_data)
+        key_sync = BitStream(bin='0b0000000%s' % key_sync_data)
         return arp_on_off, latch, target, key_sync
 
     def get_arp_type_and_range(self):
         b = self.get_next_bytes()
-        arp_type = BitArray(bin=b[0:4])
-        arp_range = BitArray(bin=b[4:])
+        type_data = b.bin[0:4]
+        range_data = b.bin[4:]
+        arp_type = BitStream(bin='0b0000%s' % type_data)
+        arp_range = BitStream(bin='0b0000%s' % range_data)
         return arp_type, arp_range
-
-    def get_voice_mode(self):
-        b = self.get_next_bytes()
-        bits = BitArray(bin=b[4:6])
-        return bits
-
-    def get_arp_trigger_pattern(self):
-        b = self.get_next_bytes()
-        # return [int(t, 16) for t in b]
-        arp_trigger_pattern = BitArray(bin=b)
-        return arp_trigger_pattern
 
     def get_delay_type(self):
         b = self.get_next_bytes()
-        delay_type = BitArray(bin=b[0:3])
+        type_data = b.bin[0:3]
+        delay_type = BitStream(bin='0b00000%s' % type_data)
         return delay_type
 
     def get_mod_type(self):
         b = self.get_next_bytes()
-        mod_type = BitArray(bin=b[0:3])
+        type_data = b.bin[0:3]
+        mod_type = BitStream(bin='0b00000%s' % type_data)
         return mod_type

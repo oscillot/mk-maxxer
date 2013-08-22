@@ -1,15 +1,14 @@
-from bitstring import BitArray
-
 from microkorg_abstract import MicroKorgAbstractParamater
 
 
 class LFOSpeed(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'MODFX LFO Speed: %s' % self.value
+        return 'MODFX LFO Speed: %s' % self.value.intle
 
     def _check_value(self):
-        if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 128):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle
+            .intle)
 
     def _get_offset(self):
         self.offset = 23
@@ -18,11 +17,12 @@ class LFOSpeed(MicroKorgAbstractParamater):
 
 class Depth(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'MODFX Depth: %s' % self.value
+        return 'MODFX Depth: %s' % self.value.intle
 
     def _check_value(self):
-        if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 128):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle
+            .intle)
 
     def _get_offset(self):
         self.offset = 24
@@ -37,10 +37,10 @@ class Type(MicroKorgAbstractParamater):
             2: 'Phaser',
 
         }
-        return 'MODFX Type: %s' % TYPES[self.value.int]
+        return 'MODFX Type: %s' % TYPES[self.value.intle]
 
     def _check_value(self):
-        if self.value.int not in range(0, 3):
+        if self.value.intle not in range(0, 3):
             raise ValueError('Parameter is out of range: %d' % self.value.int)
 
     def _get_offset(self):

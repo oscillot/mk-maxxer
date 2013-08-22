@@ -1,16 +1,14 @@
-from bitstring import BitArray
-
 from microkorg_abstract import MicroKorgAbstractParamater
 from constants import STATES, T12
 
 
 class TriggerLength(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Trigger Length: %d Step' % (int(self.value.uint) + 1)
+        return 'ARP Trigger Length: %d Step' % (int(self.value.intle) + 1)
 
     def _check_value(self):
-        if self.value.uint not in range(0, 8):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 8):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 14
@@ -20,14 +18,15 @@ class TriggerLength(MicroKorgAbstractParamater):
 class TriggerPattern(MicroKorgAbstractParamater):
     def __repr__(self):
         repr_msg = ''
-        for i, v in enumerate(self.value.uint):
-            repr_msg += 'ARP Trigger Pattern %d: %s\n' % (i + 1, STATES[v])
+        for i, b in enumerate(self.value.bin):
+            repr_msg += 'ARP Trigger Pattern %d: %s\n' % (i + 1, STATES[b])
         return repr_msg
 
     def _check_value(self):
-        for v in self.value:
-            if v not in [0, 1]:
-                raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        for i, b in enumerate(self.value.bin):
+            if b not in ['0', '1']:
+                raise ValueError('Parameter is out of range: %s at bit '
+                                 'position: %d' % (b, i))
 
     def _get_offset(self):
         self.offset = 15
@@ -43,11 +42,12 @@ class VoiceMode(MicroKorgAbstractParamater):
             3: 'Vocoder'
         }
 
-        return 'ARP Voice Mode: %s' % VOICEMODES[self.value.int]
+        return 'ARP Voice Mode: %s' % VOICEMODES[self.value.intle]
 
     def _check_value(self):
-        if self.value.uint not in [0, 2, 3]:
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in [0, 2, 3]:
+            raise ValueError('Parameter is out of range: %s' % self.value
+            .intle)
 
     def _get_offset(self):
         self.offset = 16
@@ -71,12 +71,13 @@ class ScaleKey(MicroKorgAbstractParamater):
             11: 'B',
         }
 
-        return 'ARP Scale Key: %s=%s' % (self.value.int,
-                                         SCALES[self.value.int])
+        return 'ARP Scale Key: %s=%s' % (self.value.intle,
+                                         SCALES[self.value.intle])
 
     def _check_value(self):
-        if self.value.uint not in range(0, 12):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 12):
+            raise ValueError('Parameter is out of range: %d' % self.value
+            .intle)
 
     def _get_offset(self):
         self.offset = 17
@@ -85,11 +86,11 @@ class ScaleKey(MicroKorgAbstractParamater):
 
 class ScaleType(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Scale Type: %s (0=Equal Temp)' % self.value.int
+        return 'ARP Scale Type: %s (0=Equal Temp)' % self.value.intle
 
     def _check_value(self):
-        # if self.value.uint not in [0]:
-        #     raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        # if self.value.intle not in [0]:
+        #     raise ValueError('Parameter is out of range: %d' % self.value.intle)
         pass
 
     def _get_offset(self):
@@ -102,8 +103,8 @@ class TempoMSB(MicroKorgAbstractParamater):
         return 'ARP Tempo (MSB): %s bpm (seq tempo)' % self.value
 
     def _check_value(self):
-        if self.value.uint not in range(20, 301):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(20, 301):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 30
@@ -115,8 +116,8 @@ class TempoLSB(MicroKorgAbstractParamater):
         return 'ARP Tempo (LSB): %s bpm (seq tempo)' % self.value
 
     def _check_value(self):
-        if self.value.uint not in range(20, 301):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(20, 301):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 31
@@ -125,11 +126,11 @@ class TempoLSB(MicroKorgAbstractParamater):
 
 class OnOff(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP On/Off: %s' % STATES[self.value.int]
+        return 'ARP On/Off: %s' % STATES[self.value.intle]
 
     def _check_value(self):
-        if self.value.uint not in range(0, 2):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 2):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 32
@@ -138,11 +139,11 @@ class OnOff(MicroKorgAbstractParamater):
 
 class Latch(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Latch: %s' % STATES[self.value.int]
+        return 'ARP Latch: %s' % STATES[self.value.intle]
 
     def _check_value(self):
-        if self.value.uint not in range(0, 2):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 2):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 32
@@ -152,15 +153,16 @@ class Latch(MicroKorgAbstractParamater):
 class Target(MicroKorgAbstractParamater):
     def __repr__(self):
         TARGETS = {
-            '00': 'Both',
-            '01': 'Timbre 1',
-            '10': 'Timbre 2'
+            0: 'Both',
+            1: 'Timbre 1',
+            2: 'Timbre 2'
         }
-        return 'ARP Target: %s' % TARGETS[self.value.bin]
+        return 'ARP Target: %s' % TARGETS[self.value.intle]
 
     def _check_value(self):
-        if self.value.bin not in ['00', '01', '10']:
-            raise ValueError('Parameter is out of range: %d' % self.value.bin)
+        if self.value.intle not in [0, 1, 2]:
+            raise ValueError('Parameter is out of range: %d' % self.value
+            .intle)
 
     def _get_offset(self):
         self.offset = 32
@@ -169,11 +171,11 @@ class Target(MicroKorgAbstractParamater):
 
 class KeySync(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Key Sync: %s' % STATES[self.value.int]
+        return 'ARP Key Sync: %s' % STATES[self.value.intle]
 
     def _check_value(self):
-        if self.value.uint not in range(0, 2):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 2):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 32
@@ -182,11 +184,11 @@ class KeySync(MicroKorgAbstractParamater):
 
 class Type(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Type: %s' % T12[self.value.int]
+        return 'ARP Type: %s' % T12[self.value.intle]
 
     def _check_value(self):
-        if self.value.uint not in range(0, 6):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 6):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 33
@@ -203,8 +205,8 @@ class Range(MicroKorgAbstractParamater):
         return 'ARP Range Octave(s): %s' % str(octaves)
 
     def _check_value(self):
-        if abs(self.value.uint) not in range(0, 16):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if abs(self.value.intle) not in range(0, 16):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 33
@@ -216,8 +218,8 @@ class GateTime(MicroKorgAbstractParamater):
         return 'ARP Gate Time: %s%%' % self.value
 
     def _check_value(self):
-        if self.value.uint not in range(0, 101):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 101):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 34
@@ -234,11 +236,11 @@ class Resolution(MicroKorgAbstractParamater):
             4: '1/6',
             5: '1/4'
         }
-        return 'ARP Resolution: %s' % RESOS[self.value]
+        return 'ARP Resolution: %s' % RESOS[self.value.intle]
 
     def _check_value(self):
-        if self.value.uint not in range(0, 6):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 6):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 35
@@ -250,8 +252,8 @@ class Swing(MicroKorgAbstractParamater):
         return 'ARP Swing: +/-%s%%' % self.value
 
     def _check_value(self):
-        if self.value.uint not in range(0, 101):
-            raise ValueError('Parameter is out of range: %d' % self.value.uint)
+        if self.value.intle not in range(0, 101):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 36

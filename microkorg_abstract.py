@@ -1,6 +1,6 @@
 import struct
 import traceback
-from bitstring import BitArray
+from bitstring import BitStream
 from byte_counter import ByteCounter
 
 bc = ByteCounter()
@@ -18,7 +18,7 @@ class MicroKorgAbstractData():
             fmt += 'b'
         #e.g. fmt string might be '>bbb'
         data = struct.unpack(fmt, byts)[0]
-        b = BitArray(uint=data, length=number)
+        b = BitStream(intle=data, length=8)
         return b
 
     # def _get_binary_data(self, number=1):
@@ -30,7 +30,7 @@ class MicroKorgAbstractData():
 class MicroKorgAbstractParamater():
     def __init__(self, value):
         self.value = value
-        self.mask = set()
+        # self.mask = set()
         self._get_offset()
         self._check_value()
 

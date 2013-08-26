@@ -30,11 +30,12 @@ class TimeBase(MicroKorgAbstractParamater):
 
 class Time(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'DLY Time: %s' % self.value
+        return 'DLY Time: %s' % self.value.intle
 
     def _check_value(self):
-        if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 128):
+            raise ValueError('Parameter is out of range: %d' % self.value
+                .intle)
 
     def _get_offset(self):
         self.offset = 20
@@ -43,7 +44,7 @@ class Time(MicroKorgAbstractParamater):
 
 class Depth(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'DLY Depth: %s' % self.value
+        return 'DLY Depth: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):

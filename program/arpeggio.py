@@ -100,7 +100,7 @@ class ScaleType(MicroKorgAbstractParamater):
 
 class TempoMSB(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Tempo (MSB): %s bpm (seq tempo)' % self.value
+        return 'ARP Tempo (MSB): %s bpm (seq tempo)' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(20, 301):
@@ -113,7 +113,7 @@ class TempoMSB(MicroKorgAbstractParamater):
 
 class TempoLSB(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Tempo (LSB): %s bpm (seq tempo)' % self.value
+        return 'ARP Tempo (LSB): %s bpm (seq tempo)' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(20, 301):
@@ -215,7 +215,7 @@ class Range(MicroKorgAbstractParamater):
 
 class GateTime(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Gate Time: %s%%' % self.value
+        return 'ARP Gate Time: %s%%' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 101):
@@ -249,7 +249,7 @@ class Resolution(MicroKorgAbstractParamater):
 
 class Swing(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Swing: +/-%s%%' % self.value
+        return 'ARP Swing: +/-%s%%' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 101):

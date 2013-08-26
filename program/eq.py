@@ -17,7 +17,7 @@ class HiFreq(MicroKorgAbstractParamater):
 
 class HiGain(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'EQ Hi Gain: %s+/-12 (64=0?)' % self.value
+        return 'EQ Hi Gain: %s+/-12 (64=0?)' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 64):
@@ -30,11 +30,12 @@ class HiGain(MicroKorgAbstractParamater):
 
 class LoFreq(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'EQ Lo Freq: %dHz' % T11[self.value.int]
+        return 'EQ Lo Freq: %dHz' % T11[self.value.intle]
 
     def _check_value(self):
-        if self.value.int not in range(0, 30):
-            raise ValueError('Parameter is out of range: %d' % self.value.int)
+        if self.value.intle not in range(0, 30):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle
+            .intle)
 
     def _get_offset(self):
         self.offset = 28
@@ -43,7 +44,7 @@ class LoFreq(MicroKorgAbstractParamater):
 
 class LoGain(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'EQ Lo Gain: %s+/-12 (64=0?)' % self.value
+        return 'EQ Lo Gain: %s+/-12 (64=0?)' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 64):

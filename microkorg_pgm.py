@@ -125,20 +125,23 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.kbd_octave = kbd_octave.KeyboardOctave(self.get_next_bytes())
         print self.kbd_octave
 
+        # print '!!!!!!!!!', self.voice_mode.value, self.voice_mode.value\
+        #     .hex, self.voice_mode.value.intle
+
         ###EITHER
-        if self.voice_mode in [0x0, 0x2]:
+        if self.voice_mode.value.intle in [0, 2]:
             ##TIMBRE1 DATA
             #bytes 38-145
             print 'TIMBRE1'
             self.timbre1 = MicroKorgTimbreData(data=self.data.read(107))
 
-            if self.voice_mode == 0x2: #i think??
+            if self.voice_mode.value.intle == 2: #i think??
                 ##TIMBRE2 DATA
                 #bytes 146-253
                 print 'TIMBRE2'
                 self.timbre2 = MicroKorgTimbreData(data=self.data.read(107))
         ###OR
-        elif self.voice_mode == 0x5:
+        elif self.voice_mode.value.intle == 3:
             ##VOCODER DATA
             #bytes 38-141
             print 'VOCODER'

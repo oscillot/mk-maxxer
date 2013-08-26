@@ -4,14 +4,15 @@ from microkorg_abstract import MicroKorgAbstractParamater
 
 class MidiChannel(MicroKorgAbstractParamater):
     def __repr__(self):
-        repr_str = 'MIDI Channel: %s' % self.value
-        if self.value == '-1':
+        repr_str = 'MIDI Channel: %s' % self.value.intle
+        if self.value.intle == -1:
             repr_str += ' (Global)'
         return repr_str
 
     def _check_value(self):
-        if self.value not in range(-1, 128):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.int not in range(-1, 128):
+            raise ValueError('Parameter is out of range: %d' % self.value
+            .intle)
 
     def _get_offset(self):
         self.offset = 0

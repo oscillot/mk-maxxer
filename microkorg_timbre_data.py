@@ -5,6 +5,7 @@ from microkorg_abstract import MicroKorgAbstractData
 
 from timbre import *
 
+
 class MicroKorgTimbreData(MicroKorgAbstractData):
     def __init__(self, data):
         self.data = StringIO.StringIO(data)
@@ -238,8 +239,12 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
         self.read_bytes(55)
 
     def get_bmp1_values(self):
-        b = self._get_binary_data()
-        key_priority = BitArray(b[0:2])
+        b = self.get_next_bytes()
+        key_data = b.bin[0:2]
+        key_priority = BitArray(bin='0b000000%s' % key_data)
+        #HERE
+
+
         trigger_mode = BitArray(bin=b[3])
         eg1_reset = BitArray(bin=b[4])
         eg2_reset = BitArray(bin=b[5])
@@ -248,31 +253,31 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
             trigger_mode, key_priority
 
     def get_osc2_wave_and_mod(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         wave = BitArray(bin=b[0:2])
         mod_select = BitArray(bin=b[4:6])
         return wave, mod_select
 
     def get_amp_sw_and_distortion(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         sw = BitArray(bin=b[6])
         distortion = BitArray(bin=b[0])
         return sw, distortion
 
     def get_lfo_key_sync_and_wave(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         key_sync = BitArray(bin=b[4:6])
         wave = BitArray(bin=b[0:2])
         return key_sync, wave
 
     def get_lfo_tempo_sync_and_sync_note(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         tempo_sync = BitArray(bin=b[7])
         sync_note = BitArray(bin=b[0:5])
         return tempo_sync, sync_note
 
     def get_patch_destination_and_source(self):
-        b = self._get_binary_data()
+        b = self.get_next_bytes()
         destination = BitArray(bin=b[4:])
         source = BitArray(bin=b[0:4])
         return destination, source

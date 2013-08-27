@@ -114,7 +114,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.arp_gate_time = arpeggio.GateTime(self.get_next_bytes())
         print self.arp_gate_time
         #byte 35
-        self.arp_resolution = arpeggio.Resolution(self.get_next_bytes())
+        self.arp_resolution = arpeggio.Resolution(self.get_arp_resolution())
         print self.arp_resolution
         #byte 36
         self.arp_swing = arpeggio.Swing(self.get_next_bytes())
@@ -125,9 +125,6 @@ class MicroKorgPGM(MicroKorgAbstractData):
         #byte 37
         self.kbd_octave = kbd_octave.KeyboardOctave(self.get_next_bytes())
         print self.kbd_octave
-
-        # print '!!!!!!!!!', self.voice_mode.value, self.voice_mode.value\
-        #     .hex, self.voice_mode.value.intle
 
         ###EITHER
         if self.voice_mode.value.intle in [0, 2]:
@@ -215,3 +212,9 @@ class MicroKorgPGM(MicroKorgAbstractData):
         type_data = b.bin[0:3]
         mod_type = BitStream(bin='0b00000%s' % type_data)
         return mod_type
+
+    def get_arp_resolution(self):
+        b = self.get_next_bytes()
+        reso_data = b.bin[0:4]
+        arp_reso = BitStream(bin='0b0000%s' % reso_data)
+        return arp_reso

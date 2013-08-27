@@ -16,7 +16,7 @@ class Wave(MicroKorgAbstractParamater):
 
 class WaveformCTRL1(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'OSC1 Waveform CTRL 1: %s' % self.value
+        return 'OSC1 Waveform CTRL 1: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
@@ -28,7 +28,7 @@ class WaveformCTRL1(MicroKorgAbstractParamater):
 
 class WaveformCTRL2(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'OSC1 Waveform CTRL 2: %s' % self.value
+        return 'OSC1 Waveform CTRL 2: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):

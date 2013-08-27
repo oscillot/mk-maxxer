@@ -51,7 +51,7 @@ class VibratoInt(MicroKorgAbstractParamater):
 
 class PortamentoTime(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'PITCH Portamento Time: %s' % self.value
+        return 'PITCH Portamento Time: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):

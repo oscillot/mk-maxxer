@@ -101,7 +101,7 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
         print 'FILTER'
         ##FILTER
         #byte offset 19
-        self.filter_type = filter.Type(self.get_next_bytes())
+        self.filter_type = filter.Type(self.get_filter_type())
         print self.filter_type
         #byte offset 20
         self.filter_cutoff = filter.Cutoff(self.get_next_bytes())
@@ -267,6 +267,12 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
         mod_select_data = b.bin[4:6]
         mod_select = BitArray(bin='0b000000%s' % mod_select_data)
         return wave, mod_select
+
+    def get_filter_type(self):
+        b = self.get_next_bytes()
+        type_data = b.bin[0:4]
+        filter_type = BitArray(bin='0b0000%s' % type_data)
+        return filter_type
 
     def get_amp_sw_and_distortion(self):
         b = self.get_next_bytes()

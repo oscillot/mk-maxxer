@@ -3,7 +3,7 @@ from microkorg_abstract import MicroKorgAbstractParamater
 
 class OSC1Level(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'MIXER OSC1 Level: %s' % self.value
+        return 'MIXER OSC1 Level: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
@@ -15,7 +15,7 @@ class OSC1Level(MicroKorgAbstractParamater):
 
 class OSC2Level(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'MIXER OSC2 Level: %s' % self.value
+        return 'MIXER OSC2 Level: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
@@ -27,7 +27,7 @@ class OSC2Level(MicroKorgAbstractParamater):
 
 class Noise(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'MIXER Noise: %s' % self.value
+        return 'MIXER Noise: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):

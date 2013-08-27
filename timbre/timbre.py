@@ -81,7 +81,7 @@ class TriggerMode(MicroKorgAbstractParamater):
 
 class KeyPriority(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'SYN Key Priority: %s (0=Last)' % self.value
+        return 'SYN Key Priority: %s (0=Last)' % self.value.intle
 
     def _check_value(self):
         # if self.value.intle not in range(0, 2):
@@ -95,7 +95,7 @@ class KeyPriority(MicroKorgAbstractParamater):
 
 class UnisonDetune(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'SYN Unison Detune: %s [cent]' % self.value
+        return 'SYN Unison Detune: %s [cent]' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 101):

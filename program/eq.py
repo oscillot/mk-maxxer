@@ -20,7 +20,7 @@ class HiGain(MicroKorgAbstractParamater):
         return 'EQ Hi Gain: %s+/-12 (64=0?)' % self.value.intle
 
     def _check_value(self):
-        if self.value.intle not in range(0, 64):
+        if self.value.intle not in range(0, 65):
             raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
@@ -47,7 +47,7 @@ class LoGain(MicroKorgAbstractParamater):
         return 'EQ Lo Gain: %s+/-12 (64=0?)' % self.value.intle
 
     def _check_value(self):
-        if self.value.intle not in range(0, 64):
+        if self.value.intle not in range(0, 65):
             raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):

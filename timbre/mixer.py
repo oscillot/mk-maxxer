@@ -6,8 +6,8 @@ class OSC1Level(MicroKorgAbstractParamater):
         return 'MIXER OSC1 Level: %s' % self.value
 
     def _check_value(self):
-        if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: %s' % self.value)
+        if self.value.intle not in range(0, 128):
+            raise ValueError('Parameter is out of range: %s' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 16
@@ -18,8 +18,8 @@ class OSC2Level(MicroKorgAbstractParamater):
         return 'MIXER OSC2 Level: %s' % self.value
 
     def _check_value(self):
-        if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: %s' % self.value)
+        if self.value.intle not in range(0, 128):
+            raise ValueError('Parameter is out of range: %s' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 17
@@ -30,8 +30,8 @@ class Noise(MicroKorgAbstractParamater):
         return 'MIXER Noise: %s' % self.value
 
     def _check_value(self):
-        if self.value not in range(0, 128):
-            raise ValueError('Parameter is out of range: %s' % self.value)
+        if self.value.intle not in range(0, 128):
+            raise ValueError('Parameter is out of range: %s' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 18

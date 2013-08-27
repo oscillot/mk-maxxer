@@ -25,11 +25,11 @@ class AssignMode(MicroKorgAbstractParamater):
             1: 'Poly',
             2: 'Unison'
         }
-        return 'SYN Assign Mode: %s' % MODES[self.value]
+        return 'SYN Assign Mode: %s' % MODES[self.value.intle]
 
     def _check_value(self):
-        if self.value not in range(0, 3):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 3):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 1
@@ -38,11 +38,11 @@ class AssignMode(MicroKorgAbstractParamater):
 
 class EG2Reset(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'SYN EG2 Reset: %s' % STATES[self.value]
+        return 'SYN EG2 Reset: %s' % STATES[self.value.intle]
 
     def _check_value(self):
-        if self.value not in range(0, 2):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 2):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 1
@@ -51,11 +51,11 @@ class EG2Reset(MicroKorgAbstractParamater):
 
 class EG1Reset(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'SYN EG1 Reset: %s' % STATES[self.value]
+        return 'SYN EG1 Reset: %s' % STATES[self.value.intle]
 
     def _check_value(self):
-        if self.value not in range(0, 2):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 2):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 1
@@ -68,11 +68,11 @@ class TriggerMode(MicroKorgAbstractParamater):
             0: 'Single',
             1: 'Multi'
         }
-        return 'SYN Trigger Mode: %s' % MODES[self.value]
+        return 'SYN Trigger Mode: %s' % MODES[self.value.intle]
 
     def _check_value(self):
-        if self.value not in range(0, 2):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 2):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 1
@@ -84,8 +84,8 @@ class KeyPriority(MicroKorgAbstractParamater):
         return 'SYN Key Priority: %s (0=Last)' % self.value
 
     def _check_value(self):
-        # if self.value not in range(0, 2):
-        #     raise ValueError('Parameter is out of range: %d' % self.value)
+        # if self.value.intle not in range(0, 2):
+        #     raise ValueError('Parameter is out of range: %d' % self.value.intle)
         pass
 
     def _get_offset(self):
@@ -98,8 +98,8 @@ class UnisonDetune(MicroKorgAbstractParamater):
         return 'SYN Unison Detune: %s [cent]' % self.value
 
     def _check_value(self):
-        if self.value not in range(0, 101):
-            raise ValueError('Parameter is out of range: %d' % self.value)
+        if self.value.intle not in range(0, 101):
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 2

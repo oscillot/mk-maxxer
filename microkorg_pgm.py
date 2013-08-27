@@ -21,7 +21,8 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print 'ARPEGGIO TRIGGER CTRL'
         ##ARPEGGIO_TRIGGER
         #byte 14 !!!BITMAP
-        self.arp_trigger_length = arpeggio.TriggerLength(self.get_next_bytes())
+        length_data = self.get_trigger_length_data()
+        self.arp_trigger_length = arpeggio.TriggerLength(length_data)
         print self.arp_trigger_length
         #byte 15
         self.arp_trigger_pattern = arpeggio.TriggerPattern(
@@ -148,6 +149,12 @@ class MicroKorgPGM(MicroKorgAbstractData):
             self.vocoder = MicroKorgVocoderData(data=self.data.read(103))
             #bytes 142-253 (dummy if vocoder)
             self.data.read(111)
+
+    def get_trigger_length_data(self):
+        b = self.get_next_bytes()
+        length_data = b.bin[0:3]
+        trigger_length = BitStream(bin='0b00000%s' % length_data)
+        return trigger_length
 
     def get_voice_mode(self):
         b = self.get_next_bytes()

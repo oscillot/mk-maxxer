@@ -276,8 +276,8 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
 
     def get_filter_type(self):
         b = self.get_next_bytes()
-        type_data = b.bin[0:4]
-        filter_type = BitArray(bin='0b0000%s' % type_data)
+        type_data = b.bin[0:3]
+        filter_type = BitArray(bin='0b00000%s' % type_data)
         return filter_type
 
     def get_amp_sw_and_distortion(self):

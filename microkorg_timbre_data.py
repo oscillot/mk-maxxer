@@ -59,7 +59,7 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
         self.osc1_waveform_ctrl2 = osc1.WaveformCTRL2(self.get_next_bytes())
         print self.osc1_waveform_ctrl2
         #byte offset 10
-        self.osc1_dwgs_wave = osc1.DWGSWave(self.get_next_bytes())
+        self.osc1_dwgs_wave = osc1.DWGSWave(self.get_dwgs_wave())
         print self.osc1_dwgs_wave
         #byte offset 11 (dummy)
         self.read_bytes(1)
@@ -259,6 +259,12 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
         wave_data = b.bin[0:2]
         wave = BitArray(bin='0b000000%s' % wave_data)
         return wave
+
+    def get_dwgs_wave(self):
+        b = self.get_next_bytes()
+        dwgs_data = b.bin[0:8]
+        dwgs = BitArray(bin='0b%s' % dwgs_data)
+        return dwgs
 
     def get_osc2_wave_and_mod(self):
         b = self.get_next_bytes()

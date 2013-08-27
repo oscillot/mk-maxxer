@@ -262,8 +262,8 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
 
     def get_dwgs_wave(self):
         b = self.get_next_bytes()
-        dwgs_data = b.bin[0:8]
-        dwgs = BitArray(bin='0b%s' % dwgs_data)
+        dwgs_data = b.bin[0:7]
+        dwgs = BitArray(bin='0b0%s' % dwgs_data)
         return dwgs
 
     def get_osc2_wave_and_mod(self):

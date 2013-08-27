@@ -77,7 +77,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         self.eq_hi_freq = eq.HiFreq(self.get_hi_freq())
         print self.eq_hi_freq
         #byte 27
-        self.eq_hi_gain = eq.HiGain(self.get_next_bytes())
+        self.eq_hi_gain = eq.HiGain(self.get_hi_gain())
         print self.eq_hi_gain
         #byte 28
         self.eq_low_freq = eq.LoFreq(self.get_eq_low_freq())
@@ -218,6 +218,12 @@ class MicroKorgPGM(MicroKorgAbstractData):
         freq_data = b.bin[0:6]
         hi_freq = BitStream(bin='0b00%s' % freq_data)
         return hi_freq
+
+    def get_hi_gain(self):
+        b = self.get_next_bytes()
+        gain_data = b.bin[0:7]
+        hi_gain = BitStream(bin='0b0%s' % gain_data)
+        return hi_gain
 
     def get_arp_resolution(self):
         b = self.get_next_bytes()

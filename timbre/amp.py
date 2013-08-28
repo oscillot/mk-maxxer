@@ -4,7 +4,7 @@ from constants import STATES
 
 class Level(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'AMP Level: %s' % self.value
+        return 'AMP Level: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
@@ -37,12 +37,12 @@ class Panpot(MicroKorgAbstractParamater):
 
 class AmpSW(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'AMP Amp Sw (0=EG2): %s' % self.value
+        return 'AMP Amp Sw (0=EG2): %s' % self.value.intle
 
     def _check_value(self):
-        # if self.value.intle not in range(0, 128):
-        #     raise ValueError('Parameter is out of range: %s' % self.value.intle)
-        pass
+        if self.value.intle not in range(0, 128):
+             raise ValueError('Parameter is out of range: %s' % self.value.intle)
+        #pass
 
     def _get_offset(self):
         self.offset = 27

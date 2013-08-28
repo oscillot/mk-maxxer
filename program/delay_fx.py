@@ -60,14 +60,15 @@ class Type(MicroKorgAbstractParamater):
     def __repr__(self):
         TYPES = {
             0: 'No Delay',
-            4: 'Stereo Delay',
-            2: 'Cross Delay',
             1: 'L/R Delay',
+            2: 'Cross Delay',
+
+            4: 'Stereo Delay',
         }
         return 'DLY Type: %s' % TYPES[self.value.intle]
 
     def _check_value(self):
-        if self.value.intle not in [0, 4, 2, 1]:
+        if self.value.intle not in range(0, 3):
             ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):

@@ -145,96 +145,115 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
         print 'EG1'
         ##EG1
         #byte offset 30
-        self.eg1_attack = self.get_next_bytes()
+        self.eg1_attack = eg1.Attack(self.get_next_bytes())
         print self.eg1_attack
         #byte offset 31
-        self.eg1_decay = self.get_next_bytes()
+        self.eg1_decay = eg1.Decay(self.get_next_bytes())
         print self.eg1_decay
         #byte offset 32
-        self.eg1_sustain = self.get_next_bytes()
+        self.eg1_sustain = eg1.Sustain(self.get_next_bytes())
         print self.eg1_sustain
         #byte offset 33
-        self.eg1_release = self.get_next_bytes()
+        self.eg1_release = eg1.Release(self.get_next_bytes())
         print self.eg1_release
 
         print 'EG2'
         ##EG2
         #byte offset 34
-        self.eg2_attack = self.get_next_bytes()
+        self.eg2_attack = eg2.Attack(self.get_next_bytes())
         print self.eg2_attack
         #byte offset 35
-        self.eg2_decay = self.get_next_bytes()
+        self.eg2_decay = eg2.Decay(self.get_next_bytes())
         print self.eg2_decay
         #byte offset 36
-        self.eg2_sustain = self.get_next_bytes()
+        self.eg2_sustain = eg2.Sustain(self.get_next_bytes())
         print self.eg2_sustain
         #byte offset 37
-        self.eg2_release = self.get_next_bytes()
+        self.eg2_release = eg2.Release(self.get_next_bytes())
         print self.eg2_release
 
         print 'LFO1'
         ##LFO1
         #byte offset 38 !!!BITMAP
-        self.lfo1_key_sync, self.lfo1_wave = self.get_lfo_key_sync_and_wave()
+        lfo1_key_sync, lfo1_wave = self.get_lfo_key_sync_and_wave()
+        self.lfo1_key_sync = lfo1.KeySync(lfo1_key_sync)
+        self.lfo1_wave = lfo1.Wave(lfo1_wave)
         print self.lfo1_key_sync
         print self.lfo1_wave
         #byte offset 39
-        self.lfo1_frequency = self.get_next_bytes()
+        self.lfo1_frequency = lfo1.Frequency(self.get_next_bytes())
         print self.lfo1_frequency
         #byte offset 40 !!!BITMAP
-        self.lfo1_tempo_sync, self.lfo1_sync_note = self\
+        lfo1_tempo_sync, lfo1_sync_note = self\
             .get_lfo_tempo_sync_and_sync_note()
+        self.lfo1_tempo_sync = lfo1.TempoSync(lfo1_tempo_sync)
+        self.lfo1_sync_note = lfo1.SyncNote(lfo1_sync_note)
         print self.lfo1_tempo_sync
         print self.lfo1_sync_note
 
         print 'LFO2'
         ##LFO2
         #byte offset 41 !!!BITMAP
-        self.lfo2_key_sync, self.lfo2_wave = self.get_lfo_key_sync_and_wave()
+        lfo2_key_sync, lfo2_wave = self.get_lfo_key_sync_and_wave()
+        self.lfo2_key_sync = lfo2.KeySync(lfo2_key_sync)
+        self.lfo2_wave = lfo2.Wave(lfo2_wave)
         print self.lfo2_key_sync
         print self.lfo2_wave
         #byte offset 42
-        self.lfo2_frequency = self.get_next_bytes()
+        self.lfo2_frequency = lfo2.Frequency(self.get_next_bytes())
         print self.lfo2_frequency
         #byte offset 43 !!!BITMAP
-        self.lfo2_tempo_sync, self.lfo2_sync_note = self\
+        lfo2_tempo_sync, lfo2_sync_note = self\
             .get_lfo_tempo_sync_and_sync_note()
+        self.lfo2_tempo_sync = lfo2.TempoSync(lfo2_tempo_sync)
+        self.lfo2_sync_note = lfo2.SyncNote(lfo2_sync_note)
         print self.lfo2_tempo_sync
         print self.lfo2_sync_note
 
-        print 'PATCH'
         ##PATCH
+        print 'PATCH1'
         #byte offset 44
-        self.patch1_destination, self.patch1_source = self\
+        patch1_destination, patch1_source = self\
             .get_patch_destination_and_source()
+        self.patch1_destination = patch1.Destination(patch1_destination)
+        self.patch1_source = patch1.Source(patch1_source)
         print self.patch1_destination
         print self.patch1_source
         #byte offset 45
-        self.patch1_intensity = self.get_next_bytes()
+        self.patch1_intensity = patch1.Intensity(self.get_next_bytes())
         print self.patch1_intensity
+        print 'PATCH2'
         #byte offset 46
-        self.patch2_destination, self.patch2_source = self\
+        patch2_destination, patch2_source = self\
             .get_patch_destination_and_source()
+        self.patch2_destination = patch2.Destination(patch2_destination)
+        self.patch2_source = patch2.Source(patch2_source)
         print self.patch2_destination
         print self.patch2_source
         #byte offset 47
-        self.patch2_intensity = self.get_next_bytes()
+        self.patch2_intensity = patch2.Intensity(self.get_next_bytes())
         print self.patch2_intensity
+        print 'PATCH3'
         #byte offset 48
-        self.patch3_destination, self.patch3_source = self\
+        patch3_destination, patch3_source = self\
             .get_patch_destination_and_source()
+        self.patch3_destination = patch3.Destination(patch3_destination)
+        self.patch3_source = patch3.Source(patch3_source)
         print self.patch3_destination
         print self.patch3_source
         #byte offset 49
-        self.patch3_intensity = self.get_next_bytes()
+        self.patch3_intensity = patch3.Intensity(self.get_next_bytes())
         print self.patch3_intensity
+        print 'PATCH4'
         #byte offset 50
-        self.patch4_destination, self.patch4_source = self\
+        patch4_destination, patch4_source = self\
             .get_patch_destination_and_source()
+        self.patch4_destination = patch4.Destination(patch4_destination)
+        self.patch4_source = patch4.Source(patch4_source)
         print self.patch4_destination
         print self.patch4_source
         #byte offset 51
-        self.patch4_intensity = self.get_next_bytes()
+        self.patch4_intensity = patch4.Intensity(self.get_next_bytes())
         print self.patch4_intensity
         #byte offset 52-107 (dummy)
         self.read_bytes(55)
@@ -291,6 +310,7 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
     def get_lfo_key_sync_and_wave(self):
         b = self.get_next_bytes()
         key_sync_data = b.bin[4:6]
+        print key_sync_data
         key_sync = BitArray('0b000000%s' % key_sync_data)
         wave_data = b.bin[0:2]
         wave = BitArray(bin='0b000000%s' % wave_data)
@@ -306,8 +326,8 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
 
     def get_patch_destination_and_source(self):
         b = self.get_next_bytes()
-        destination_data = b.bin[4:]
-        destination = BitArray(bin='0b0000%s' % destination_data)
-        source_data = b.bin[0:4]
-        source = BitArray(bin='0b0000%s' % source_data)
+        destination_data = b.bin[4:7]
+        destination = BitArray(bin='0b00000%s' % destination_data)
+        source_data = b.bin[0:3]
+        source = BitArray(bin='0b00000%s' % source_data)
         return destination, source

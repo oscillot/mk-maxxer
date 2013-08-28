@@ -74,26 +74,23 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print 'EQ'
         ##EQ
         #byte 26
-        self.eq_hi_freq = eq.HiFreq(self.get_hi_freq())
+        self.eq_hi_freq = eq.HiFreq(self.get_freq())
         print self.eq_hi_freq
         #byte 27
-        self.eq_hi_gain = eq.HiGain(self.get_hi_gain())
+        self.eq_hi_gain = eq.HiGain(self.get_gain())
         print self.eq_hi_gain
         #byte 28
-        self.eq_low_freq = eq.LoFreq(self.get_eq_low_freq())
+        self.eq_low_freq = eq.LoFreq(self.get_freq())
         print self.eq_low_freq
         #byte 29
-        self.eq_low_gain = eq.LoGain(self.get_next_bytes())
+        self.eq_low_gain = eq.LoGain(self.get_gain())
         print self.eq_low_gain
 
         print 'ARPEGGIO'
         ##ARPEGGIO
-        #byte 30
-        self.arp_tempo_msb = arpeggio.TempoMSB(self.get_next_bytes())
-        print self.arp_tempo_msb
-        #byte 31
-        self.arp_tempo_lsb = arpeggio.TempoLSB(self.get_next_bytes())
-        print self.arp_tempo_lsb
+        #byte 30 & 31
+        self.arp_tempo = arpeggio.Tempo(self.get_next_bytes(2))
+        print self.arp_tempo
         #byte 32 !!!BITMAP
         arp_on_off, arp_latch, arp_target, arp_key_sync = self.get_arp_bmp_32()
         self.arp_on_off = arpeggio.OnOff(arp_on_off)
@@ -175,12 +172,6 @@ class MicroKorgPGM(MicroKorgAbstractData):
         delay_time_base = BitStream(bin='0b00000%s' % time_base_data)
         return delay_sync, delay_time_base
 
-    def get_eq_low_freq(self):
-        b = self.get_next_bytes()
-        low_freq_data = b.bin[0:6]
-        eq_low_freq = BitStream(bin='0b00%s' % low_freq_data)
-        return eq_low_freq
-
     def get_arp_bmp_32(self):
         b = self.get_next_bytes()
         on_off_data = b.bin[7]
@@ -195,16 +186,16 @@ class MicroKorgPGM(MicroKorgAbstractData):
 
     def get_arp_type_and_range(self):
         b = self.get_next_bytes()
-        type_data = b.bin[0:4]
+        type_data = b.bin[0:3]
         range_data = b.bin[4:]
-        arp_type = BitStream(bin='0b0000%s' % type_data)
+        arp_type = BitStream(bin='0b00000%s' % type_data)
         arp_range = BitStream(bin='0b0000%s' % range_data)
         return arp_type, arp_range
 
     def get_delay_type(self):
         b = self.get_next_bytes()
-        type_data = b.bin[0:3]
-        delay_type = BitStream(bin='0b00000%s' % type_data)
+        type_data = b.bin[0:2]
+        delay_type = BitStream(bin='0b000000%s' % type_data)
         return delay_type
 
     def get_mod_type(self):
@@ -213,17 +204,17 @@ class MicroKorgPGM(MicroKorgAbstractData):
         mod_type = BitStream(bin='0b00000%s' % type_data)
         return mod_type
 
-    def get_hi_freq(self):
+    def get_freq(self):
         b = self.get_next_bytes()
         freq_data = b.bin[0:6]
-        hi_freq = BitStream(bin='0b00%s' % freq_data)
-        return hi_freq
+        freq = BitStream(bin='0b00%s' % freq_data)
+        return freq
 
-    def get_hi_gain(self):
+    def get_gain(self):
         b = self.get_next_bytes()
         gain_data = b.bin[0:7]
-        hi_gain = BitStream(bin='0b0%s' % gain_data)
-        return hi_gain
+        gain = BitStream(bin='0b0%s' % gain_data)
+        return gain
 
     def get_arp_resolution(self):
         b = self.get_next_bytes()

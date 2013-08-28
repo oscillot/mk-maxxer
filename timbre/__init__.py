@@ -5,3 +5,11 @@ from osc2 import *
 from mixer import *
 from filter import *
 from amp import *
+from eg1 import *
+from eg2 import *
+from lfo1 import *
+from lfo2 import *
+from patch1 import *
+from patch2 import *
+from patch3 import *
+from patch4 import *

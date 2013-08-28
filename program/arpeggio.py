@@ -89,39 +89,40 @@ class ScaleType(MicroKorgAbstractParamater):
         return 'ARP Scale Type: %s (0=Equal Temp)' % self.value.intle
 
     def _check_value(self):
-        # if self.value.intle not in [0]:
-        #     raise ValueError('Parameter is out of range: %d' % self.value.intle)
-        pass
+        if self.value.intle not in range(0, 16): #this is only checking for a
+        # 4-bit number, the docs give NO idea what to expect here:
+#+-----------+-------------------+-----------------------------------+
+#| 17 B4~7 | Scale Key | 0=C |
+#| -------+-------------------+-----------------------------------+
+#| B0~3 | Scale Type | 0=Equal Temp |
+#+-----------+-------------------+-----------------------------------+
+            raise ValueError('Parameter is out of range: %d' % self.value.intle)
+        #pass
 
     def _get_offset(self):
         self.offset = 17
         self.bits = range(0, 4)
 
 
-class TempoMSB(MicroKorgAbstractParamater):
+class Tempo(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'ARP Tempo (MSB): %s bpm (seq tempo)' % self.value.intle
+        return 'ARP Tempo: %s bpm (seq tempo)' % self.value.intle
 
     def _check_value(self):
-        if self.value.intle not in range(20, 301):
+        #print self.value.bin
+        if self.value.intle not in range(0, 256): #another byte-only check,
+        # spec says this but I keep getting zeroes:
+        #+-----------+-------------------+-----------------------------------+
+        #| ARPEGGIO |
+        #+-----------+-------------------+-----------------------------------+
+        #| 30 | tempo (MSB) | 20~300 |
+        #| 31 | (LSB) | (SEQ tempo) |
+        #+-----------+-------------------+-----------------------------------+
             raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 30
-        self.bits = range(0, 8)
-
-
-class TempoLSB(MicroKorgAbstractParamater):
-    def __repr__(self):
-        return 'ARP Tempo (LSB): %s bpm (seq tempo)' % self.value.intle
-
-    def _check_value(self):
-        if self.value.intle not in range(20, 301):
-            raise ValueError('Parameter is out of range: %d' % self.value.intle)
-
-    def _get_offset(self):
-        self.offset = 31
-        self.bits = range(0, 8)
+        self.bits = range(0, 16)
 
 
 class OnOff(MicroKorgAbstractParamater):

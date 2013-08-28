@@ -18,7 +18,7 @@ class MicroKorgAbstractData():
             fmt += 'b'
         #e.g. fmt string might be '>bbb'
         data = struct.unpack(fmt, byts)[0]
-        b = BitStream(intle=data, length=8)
+        b = BitStream(intle=data, length=8*number)
         return b
 
     # def _get_binary_data(self, number=1):

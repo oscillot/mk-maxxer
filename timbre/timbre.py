@@ -23,12 +23,13 @@ class AssignMode(MicroKorgAbstractParamater):
         MODES = {
             0: 'Mono',
             1: 'Poly',
-            2: 'Unison'
+            2: 'Unison',
+            3: 'FIXME'
         }
         return 'SYN Assign Mode: %s' % MODES[self.value.intle]
 
     def _check_value(self):
-        if self.value.intle not in range(0, 3):
+        if self.value.intle not in range(0, 4):
             raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):

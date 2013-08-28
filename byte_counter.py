@@ -1,5 +1,3 @@
-
-
 class ByteCounter(object):
     def __init__(self):
         self.position = -1

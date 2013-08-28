@@ -21,7 +21,7 @@ class Type(MicroKorgAbstractParamater):
 
 class Cutoff(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'FILTER Cutoff: %s' % self.value
+        return 'FILTER Cutoff: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
@@ -33,7 +33,7 @@ class Cutoff(MicroKorgAbstractParamater):
 
 class Resonance(MicroKorgAbstractParamater):
     def __repr__(self):
-        return 'FILTER Resonance: %s' % self.value
+        return 'FILTER Resonance: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):

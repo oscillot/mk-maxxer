@@ -1,8 +1,8 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 from constants import T2
 
 
-class Wave(MicroKorgAbstractParamater):
+class Wave(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'OSC1 Wave: %s' % T2[self.value.intle]
 
@@ -14,7 +14,7 @@ class Wave(MicroKorgAbstractParamater):
         self.offset = 7
 
 
-class WaveformCTRL1(MicroKorgAbstractParamater):
+class WaveformCTRL1(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'OSC1 Waveform CTRL 1: %s' % self.value.intle
 
@@ -26,7 +26,7 @@ class WaveformCTRL1(MicroKorgAbstractParamater):
         self.offset = 8
 
 
-class WaveformCTRL2(MicroKorgAbstractParamater):
+class WaveformCTRL2(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'OSC1 Waveform CTRL 2: %s' % self.value.intle
 
@@ -38,7 +38,7 @@ class WaveformCTRL2(MicroKorgAbstractParamater):
         self.offset = 9
 
 
-class DWGSWave(MicroKorgAbstractParamater):
+class DWGSWave(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'OSC1 DWGS Wave: %d' % (int(self.value.intle) + 1)
 

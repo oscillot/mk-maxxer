@@ -1,7 +1,7 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class Tune(MicroKorgAbstractParamater):
+class Tune(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'PITCH Tune: %d+/-50[cent]' % (self.value.intle - 64)
 
@@ -13,7 +13,7 @@ class Tune(MicroKorgAbstractParamater):
         self.offset = 3
 
 
-class BendRange(MicroKorgAbstractParamater):
+class BendRange(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'PITCH Bend Range: %d+/-12[note]' % (self.value.intle - 64)
 
@@ -25,7 +25,7 @@ class BendRange(MicroKorgAbstractParamater):
         self.offset = 4
 
 
-class Transpose(MicroKorgAbstractParamater):
+class Transpose(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'PITCH Transpose: %d+/-24[note]' % (self.value.intle - 64)
 
@@ -37,7 +37,7 @@ class Transpose(MicroKorgAbstractParamater):
         self.offset = 5
 
 
-class VibratoInt(MicroKorgAbstractParamater):
+class VibratoInt(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'PITCH Vibrato Int: %d+/-63' % (self.value.intle - 64)
 
@@ -49,7 +49,7 @@ class VibratoInt(MicroKorgAbstractParamater):
         self.offset = 6
 
 
-class PortamentoTime(MicroKorgAbstractParamater):
+class PortamentoTime(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'PITCH Portamento Time: %s' % self.value.intle
 

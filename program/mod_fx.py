@@ -1,7 +1,7 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class LFOSpeed(MicroKorgAbstractParamater):
+class LFOSpeed(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'MODFX LFO Speed: %s' % self.value.intle
 
@@ -15,7 +15,7 @@ class LFOSpeed(MicroKorgAbstractParamater):
         self.bits = range(0, 8)
 
 
-class Depth(MicroKorgAbstractParamater):
+class Depth(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'MODFX Depth: %s' % self.value.intle
 
@@ -29,7 +29,7 @@ class Depth(MicroKorgAbstractParamater):
         self.bits = range(0, 8)
 
 
-class Type(MicroKorgAbstractParamater):
+class Type(MicroKorgAbstractParameter):
     def __repr__(self):
         TYPES = {
             0: 'Chorus/Flanger',
@@ -37,10 +37,14 @@ class Type(MicroKorgAbstractParamater):
             2: 'Phaser',
 
         }
-        return 'MODFX Type: %s' % TYPES[self.value.intle]
+        try:
+            return 'MODFX Type: %s' % TYPES[self.value.intle]
+        except KeyError:
+            return 'WARN! MODFX Type UNKNOWN!: expected 0-2, got %s' % self\
+                .value.intle
 
     def _check_value(self):
-        if self.value.intle not in range(0, 3):
+        if self.value.intle not in range(0, 4):
             raise ValueError('Parameter is out of range: %d' % self.value.int)
 
     def _get_offset(self):

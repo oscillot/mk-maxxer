@@ -30,9 +30,9 @@ def get_bit(data):
     return ones[0]
 
 
-b = BitArray(bin='0b01011010')
+# b = BitArray(bin='0b01011010')
 # b = BitArray(bin='0b01000000')
-print get_bits(b)
+# print get_bits(b)
 # print get_zeroes(b)
 # print get_ones(b)
 # print get_bit(b)

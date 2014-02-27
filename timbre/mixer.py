@@ -1,7 +1,7 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class OSC1Level(MicroKorgAbstractParamater):
+class OSC1Level(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'MIXER OSC1 Level: %s' % self.value.intle
 
@@ -13,7 +13,7 @@ class OSC1Level(MicroKorgAbstractParamater):
         self.offset = 16
 
 
-class OSC2Level(MicroKorgAbstractParamater):
+class OSC2Level(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'MIXER OSC2 Level: %s' % self.value.intle
 
@@ -25,7 +25,7 @@ class OSC2Level(MicroKorgAbstractParamater):
         self.offset = 17
 
 
-class Noise(MicroKorgAbstractParamater):
+class Noise(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'MIXER Noise: %s' % self.value.intle
 

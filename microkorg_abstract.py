@@ -27,7 +27,7 @@ class MicroKorgAbstractData():
     #     return b.bin.zfill(8*number)
 
 
-class MicroKorgAbstractParamater():
+class MicroKorgAbstractParameter():
     def __init__(self, value):
         self.value = value
         # self.mask = set()

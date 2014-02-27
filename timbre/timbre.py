@@ -1,8 +1,8 @@
-from constants import STATES
-from microkorg_abstract import MicroKorgAbstractParamater
+from constants import STATES, plus_minus
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class MidiChannel(MicroKorgAbstractParamater):
+class MidiChannel(MicroKorgAbstractParameter):
     def __repr__(self):
         repr_str = 'MIDI Channel: %s' % self.value.intle
         if self.value.intle == -1:
@@ -18,7 +18,7 @@ class MidiChannel(MicroKorgAbstractParamater):
         self.offset = 0
 
 
-class AssignMode(MicroKorgAbstractParamater):
+class AssignMode(MicroKorgAbstractParameter):
     def __repr__(self):
         MODES = {
             0: 'Mono',
@@ -37,7 +37,7 @@ class AssignMode(MicroKorgAbstractParamater):
         self.bits = [6, 7]
 
 
-class EG2Reset(MicroKorgAbstractParamater):
+class EG2Reset(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'SYN EG2 Reset: %s' % STATES[self.value.intle]
 
@@ -50,7 +50,7 @@ class EG2Reset(MicroKorgAbstractParamater):
         self.bits = [5]
 
 
-class EG1Reset(MicroKorgAbstractParamater):
+class EG1Reset(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'SYN EG1 Reset: %s' % STATES[self.value.intle]
 
@@ -63,7 +63,7 @@ class EG1Reset(MicroKorgAbstractParamater):
         self.bits = [4]
 
 
-class TriggerMode(MicroKorgAbstractParamater):
+class TriggerMode(MicroKorgAbstractParameter):
     def __repr__(self):
         MODES = {
             0: 'Single',
@@ -80,7 +80,7 @@ class TriggerMode(MicroKorgAbstractParamater):
         self.bits = [3]
 
 
-class KeyPriority(MicroKorgAbstractParamater):
+class KeyPriority(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'SYN Key Priority: %s (0=Last)' % self.value.intle
 
@@ -94,12 +94,12 @@ class KeyPriority(MicroKorgAbstractParamater):
         self.bits = [0, 1]
 
 
-class UnisonDetune(MicroKorgAbstractParamater):
+class UnisonDetune(MicroKorgAbstractParameter):
     def __repr__(self):
-        return 'SYN Unison Detune: %s [cent]' % self.value.intle
+        return 'SYN Unison Detune: %s [cent]' % plus_minus(self.value.intle)
 
     def _check_value(self):
-        if self.value.intle not in range(0, 101):
+        if self.value.intle not in range(0, 128):
             raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):

@@ -1,7 +1,7 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class KeyboardOctave(MicroKorgAbstractParamater):
+class KeyboardOctave(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'KBD Octave: Shift Octave(s) [%s raw shift]' % self.value.intle
 

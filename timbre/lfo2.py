@@ -1,8 +1,8 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 from constants import STATES, VOICES, WAVEFORMS, T5
 
 
-class KeySync(MicroKorgAbstractParamater):
+class KeySync(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'LFO2 Key Sync: %s' % VOICES[self.value.intle]
 
@@ -15,7 +15,7 @@ class KeySync(MicroKorgAbstractParamater):
         self.bits = [4, 5] #probably just one of these
 
 
-class Wave(MicroKorgAbstractParamater):
+class Wave(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'LFO2 Wave: %s' % WAVEFORMS[self.value.intle]
 
@@ -28,7 +28,7 @@ class Wave(MicroKorgAbstractParamater):
         self.bits = [0, 1] #probably just one of these
         
         
-class Frequency(MicroKorgAbstractParamater):
+class Frequency(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'LFO2 Frequency: %d' % self.value.intle
 
@@ -40,7 +40,7 @@ class Frequency(MicroKorgAbstractParamater):
         self.offset = 42
 
 
-class TempoSync(MicroKorgAbstractParamater):
+class TempoSync(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'LFO2 TempoSync: %s' % STATES[self.value.intle]
 
@@ -53,10 +53,12 @@ class TempoSync(MicroKorgAbstractParamater):
         self.bits = [7]
         
         
-class SyncNote(MicroKorgAbstractParamater):
+class SyncNote(MicroKorgAbstractParameter):
     def __repr__(self):
-        return 'LFO2 SyncNote: %s' % T5[self.value.intle - 1] #this might be
-        # worng
+        try:
+            return 'LFO2 SyncNote: %s' % T5[self.value.intle] #this might be
+        except KeyError:# worng
+            return 'WARN! LFO2 SyncNote UNKNOWN: expected 0-14, got %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 16):

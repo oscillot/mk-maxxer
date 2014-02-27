@@ -1,8 +1,8 @@
-from microkorg_abstract import MicroKorgAbstractParamater
-from constants import STATES, T12
+from microkorg_abstract import MicroKorgAbstractParameter
+from constants import STATES, T12, plus_minus
 
 
-class TriggerLength(MicroKorgAbstractParamater):
+class TriggerLength(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP Trigger Length: %d Step' % (int(self.value.intle) + 1)
 
@@ -15,7 +15,7 @@ class TriggerLength(MicroKorgAbstractParamater):
         self.bits = range(0, 3)
 
 
-class TriggerPattern(MicroKorgAbstractParamater):
+class TriggerPattern(MicroKorgAbstractParameter):
     def __repr__(self):
         repr_msg = ''
         for i, b in enumerate(self.value.bin):
@@ -33,7 +33,7 @@ class TriggerPattern(MicroKorgAbstractParamater):
         self.bits = range(0, 8)
 
 
-class VoiceMode(MicroKorgAbstractParamater):
+class VoiceMode(MicroKorgAbstractParameter):
     def __repr__(self):
 
         VOICEMODES = {
@@ -54,7 +54,7 @@ class VoiceMode(MicroKorgAbstractParamater):
         self.bits = [4, 5]
 
 
-class ScaleKey(MicroKorgAbstractParamater):
+class ScaleKey(MicroKorgAbstractParameter):
     def __repr__(self):
         SCALES = {
             0: 'C',
@@ -84,7 +84,7 @@ class ScaleKey(MicroKorgAbstractParamater):
         self.bits = range(4, 8)
 
 
-class ScaleType(MicroKorgAbstractParamater):
+class ScaleType(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP Scale Type: %s (0=Equal Temp)' % self.value.intle
 
@@ -104,7 +104,7 @@ class ScaleType(MicroKorgAbstractParamater):
         self.bits = range(0, 4)
 
 
-class Tempo(MicroKorgAbstractParamater):
+class Tempo(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP Tempo: %s bpm (seq tempo)' % self.value.intle
 
@@ -125,7 +125,7 @@ class Tempo(MicroKorgAbstractParamater):
         self.bits = range(0, 16)
 
 
-class OnOff(MicroKorgAbstractParamater):
+class OnOff(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP On/Off: %s' % STATES[self.value.intle]
 
@@ -138,7 +138,7 @@ class OnOff(MicroKorgAbstractParamater):
         self.bits = [7]
 
 
-class Latch(MicroKorgAbstractParamater):
+class Latch(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP Latch: %s' % STATES[self.value.intle]
 
@@ -151,17 +151,21 @@ class Latch(MicroKorgAbstractParamater):
         self.bits = [6]
 
 
-class Target(MicroKorgAbstractParamater):
+class Target(MicroKorgAbstractParameter):
     def __repr__(self):
         TARGETS = {
             0: 'Both',
             1: 'Timbre 1',
             2: 'Timbre 2'
         }
-        return 'ARP Target: %s' % TARGETS[self.value.intle]
+        try:
+            return 'ARP Target: %s' % TARGETS[self.value.intle]
+        except KeyError:
+            return 'WARN! ARP Target UNKNOWN!: expected 0-2, got %s' % self\
+                .value.intle
 
     def _check_value(self):
-        if self.value.intle not in [0, 1, 2]:
+        if self.value.intle not in range(0, 4):
             raise ValueError('Parameter is out of range: %d' % self.value
             .intle)
 
@@ -170,7 +174,7 @@ class Target(MicroKorgAbstractParamater):
         self.bits = [4, 5]
 
 
-class KeySync(MicroKorgAbstractParamater):
+class KeySync(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP Key Sync: %s' % STATES[self.value.intle]
 
@@ -183,7 +187,7 @@ class KeySync(MicroKorgAbstractParamater):
         self.bits = [0]
 
 
-class Type(MicroKorgAbstractParamater):
+class Type(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP Type: %s' % T12[self.value.intle]
 
@@ -196,7 +200,7 @@ class Type(MicroKorgAbstractParamater):
         self.bits = range(0, 4)
 
 
-class Range(MicroKorgAbstractParamater):
+class Range(MicroKorgAbstractParameter):
     def __repr__(self):
         octaves = []
         for i, c in enumerate(self.value.bin):
@@ -214,7 +218,7 @@ class Range(MicroKorgAbstractParamater):
         self.bits = range(4, 8)
 
 
-class GateTime(MicroKorgAbstractParamater):
+class GateTime(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'ARP Gate Time: %s%%' % self.value.intle
 
@@ -227,7 +231,7 @@ class GateTime(MicroKorgAbstractParamater):
         self.bits = range(0, 8)
 
 
-class Resolution(MicroKorgAbstractParamater):
+class Resolution(MicroKorgAbstractParameter):
     def __repr__(self):
         RESOS = {
             0: '1/24',
@@ -237,23 +241,26 @@ class Resolution(MicroKorgAbstractParamater):
             4: '1/6',
             5: '1/4'
         }
-        return 'ARP Resolution: %s' % RESOS[self.value.intle]
+        try:
+            return 'ARP Resolution: %s' % RESOS[self.value.intle]
+        except KeyError:
+            return 'WARN! ARP Resolution UNKNOWN: Expcted 0-5, got %d' % self.value.intle
 
     def _check_value(self):
-        if self.value.intle not in range(0, 6):
+        if self.value.intle not in range(0, 8):
             raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):
         self.offset = 35
-        self.bits = range(0, 8)
+        self.bits = range(0, 4)
 
 
-class Swing(MicroKorgAbstractParamater):
+class Swing(MicroKorgAbstractParameter):
     def __repr__(self):
-        return 'ARP Swing: +/-%s%%' % self.value.intle
+        return 'ARP Swing: +/-%s%%' % plus_minus(self.value.intle)
 
     def _check_value(self):
-        if self.value.intle not in range(0, 101):
+        if self.value.intle not in range(0, 128):
             raise ValueError('Parameter is out of range: %d' % self.value.intle)
 
     def _get_offset(self):

@@ -1,8 +1,8 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 from constants import STATES, T1
 
 
-class Sync(MicroKorgAbstractParamater):
+class Sync(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'DLY Sync: %s' % STATES[self.value.intle]
 
@@ -15,7 +15,7 @@ class Sync(MicroKorgAbstractParamater):
         self.bits = [7]
 
 
-class TimeBase(MicroKorgAbstractParamater):
+class TimeBase(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'DLY Time Base: %s' % T1[self.value.intle]
 
@@ -28,7 +28,7 @@ class TimeBase(MicroKorgAbstractParamater):
         self.bits = range(0, 4)
 
 
-class Time(MicroKorgAbstractParamater):
+class Time(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'DLY Time: %s' % self.value.intle
 
@@ -42,7 +42,7 @@ class Time(MicroKorgAbstractParamater):
         self.bits = range(0, 8)
 
 
-class Depth(MicroKorgAbstractParamater):
+class Depth(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'DLY Depth: %s' % self.value.intle
 
@@ -56,7 +56,7 @@ class Depth(MicroKorgAbstractParamater):
         self.bits = range(0, 8)
 
 
-class Type(MicroKorgAbstractParamater):
+class Type(MicroKorgAbstractParameter):
     def __repr__(self):
         TYPES = {
             0: 'No Delay',

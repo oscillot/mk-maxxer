@@ -1,8 +1,8 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 from constants import T4, T3
 
 
-class Destination(MicroKorgAbstractParamater):
+class Destination(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'Patch1 Destination: %s' % T4[self.value.intle]
 
@@ -15,7 +15,7 @@ class Destination(MicroKorgAbstractParamater):
         self.bits = range(4, 8)
 
 
-class Source(MicroKorgAbstractParamater):
+class Source(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'Patch1 Source: %s' % T3[self.value.intle]
 
@@ -28,7 +28,7 @@ class Source(MicroKorgAbstractParamater):
         self.bits = range(0, 4)
 
 
-class Intensity(MicroKorgAbstractParamater):
+class Intensity(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'Patch1 Intensity: %d' % self.value.intle
 

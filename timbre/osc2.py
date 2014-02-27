@@ -1,7 +1,7 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class ModSelect(MicroKorgAbstractParamater):
+class ModSelect(MicroKorgAbstractParameter):
     def __repr__(self):
         MODS = {
             0: 'Off',
@@ -20,7 +20,7 @@ class ModSelect(MicroKorgAbstractParamater):
         self.bits = [4, 5]
 
 
-class Wave(MicroKorgAbstractParamater):
+class Wave(MicroKorgAbstractParameter):
     def __repr__(self):
         WAVES = {
             0: 'Saw',
@@ -38,7 +38,7 @@ class Wave(MicroKorgAbstractParamater):
         self.bits = [0, 1]
 
 
-class Semitone(MicroKorgAbstractParamater):
+class Semitone(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'OSC2 Semitone: %d+/-24[note]' % (int(self.value.intle) - 64)
 
@@ -50,7 +50,7 @@ class Semitone(MicroKorgAbstractParamater):
         self.offset = 14
 
 
-class Tune(MicroKorgAbstractParamater):
+class Tune(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'OSC2 Tune: %d+/-63' % (int(self.value.intle) - 64)
 

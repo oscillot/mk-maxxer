@@ -1,7 +1,7 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class Attack(MicroKorgAbstractParamater):
+class Attack(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'EG1 Attack: %d' % self.value.intle
 
@@ -13,7 +13,7 @@ class Attack(MicroKorgAbstractParamater):
         self.offset = 30
 
 
-class Decay(MicroKorgAbstractParamater):
+class Decay(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'EG1 Decay: %d' % self.value.intle
 
@@ -25,7 +25,7 @@ class Decay(MicroKorgAbstractParamater):
         self.offset = 31
 
 
-class Sustain(MicroKorgAbstractParamater):
+class Sustain(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'EG1 Sustain: %d' % self.value.intle
 
@@ -37,7 +37,7 @@ class Sustain(MicroKorgAbstractParamater):
         self.offset = 32
 
 
-class Release(MicroKorgAbstractParamater):
+class Release(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'EG1 Release: %d' % self.value.intle
 

@@ -1,7 +1,7 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 
 
-class Type(MicroKorgAbstractParamater):
+class Type(MicroKorgAbstractParameter):
     def __repr__(self):
         TYPES = {
             0: '24LPF',
@@ -19,7 +19,7 @@ class Type(MicroKorgAbstractParamater):
         self.offset = 19
 
 
-class Cutoff(MicroKorgAbstractParamater):
+class Cutoff(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'FILTER Cutoff: %s' % self.value.intle
 
@@ -31,7 +31,7 @@ class Cutoff(MicroKorgAbstractParamater):
         self.offset = 20
 
 
-class Resonance(MicroKorgAbstractParamater):
+class Resonance(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'FILTER Resonance: %s' % self.value.intle
 
@@ -43,7 +43,7 @@ class Resonance(MicroKorgAbstractParamater):
         self.offset = 21
 
 
-class EG1Intensity(MicroKorgAbstractParamater):
+class EG1Intensity(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'FILTER EG1 Intensity: %d+/-63' % (int(self.value.intle) - 64)
 
@@ -55,7 +55,7 @@ class EG1Intensity(MicroKorgAbstractParamater):
         self.offset = 22
 
 
-class VelocitySense(MicroKorgAbstractParamater):
+class VelocitySense(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'FILTER Velocity Sense: %d' % (int(self.value.intle) - 64)
 
@@ -67,7 +67,7 @@ class VelocitySense(MicroKorgAbstractParamater):
         self.offset = 23
 
 
-class KeyboardTrack(MicroKorgAbstractParamater):
+class KeyboardTrack(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'FILTER Keyboard Track: %d+/-63' % (int(self.value.intle) - 64)
 

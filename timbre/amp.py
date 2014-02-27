@@ -1,8 +1,8 @@
-from microkorg_abstract import MicroKorgAbstractParamater
+from microkorg_abstract import MicroKorgAbstractParameter
 from constants import STATES
 
 
-class Level(MicroKorgAbstractParamater):
+class Level(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'AMP Level: %s' % self.value.intle
 
@@ -14,7 +14,7 @@ class Level(MicroKorgAbstractParamater):
         self.offset = 25
 
 
-class Panpot(MicroKorgAbstractParamater):
+class Panpot(MicroKorgAbstractParameter):
     def __repr__(self):
         pp = int(self.value.intle)
         if pp < 0:
@@ -35,7 +35,7 @@ class Panpot(MicroKorgAbstractParamater):
         self.offset = 26
 
 
-class AmpSW(MicroKorgAbstractParamater):
+class AmpSW(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'AMP Amp Sw (0=EG2): %s' % self.value.intle
 
@@ -49,7 +49,7 @@ class AmpSW(MicroKorgAbstractParamater):
         self.bits = [6]
 
 
-class Distortion(MicroKorgAbstractParamater):
+class Distortion(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'AMP Distortion: %s' % STATES[self.value.intle]
 
@@ -62,7 +62,7 @@ class Distortion(MicroKorgAbstractParamater):
         self.bits = [0]
 
 
-class VelocitySense(MicroKorgAbstractParamater):
+class VelocitySense(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'AMP Velocity Sense: %d' % (int(self.value.intle) - 64)
 
@@ -74,7 +74,7 @@ class VelocitySense(MicroKorgAbstractParamater):
         self.offset = 28
 
 
-class KeyboardTrack(MicroKorgAbstractParamater):
+class KeyboardTrack(MicroKorgAbstractParameter):
     def __repr__(self):
         return 'AMP Keyboard Track: %d+/-63' % (int(self.value.intle) - 64)
 

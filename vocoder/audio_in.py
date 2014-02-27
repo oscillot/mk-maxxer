@@ -1,49 +1,51 @@
 from microkorg_abstract import MicroKorgAbstractParameter
+from constants.states import STATES
 
 
-class Attack(MicroKorgAbstractParameter):
+class HPFGate(MicroKorgAbstractParameter):
     def __repr__(self):
-        return 'EG2 Attack: %d' % self.value.intle
+        return 'HPFGate: %s' % STATES[self.value.intle]
+
+    def _check_value(self):
+        if self.value.intle not in range(0, 2):
+            raise ValueError('Parameter is out of range: %s' % self.value.intle)
+
+    def _get_offset(self):
+        self.offset = 12
+        self.bits = [0]
+
+
+class HPFLevel(MicroKorgAbstractParameter):
+    def __repr__(self):
+        return 'HPFGate: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
             raise ValueError('Parameter is out of range: %s' % self.value.intle)
 
     def _get_offset(self):
-        self.offset = 34
-        
-        
-class Decay(MicroKorgAbstractParameter):
+        self.offset = 18
+
+
+class GateSense(MicroKorgAbstractParameter):
     def __repr__(self):
-        return 'EG2 Decay: %d' % self.value.intle
+        return 'HPFGate: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
             raise ValueError('Parameter is out of range: %s' % self.value.intle)
 
     def _get_offset(self):
-        self.offset = 35
-        
+        self.offset = 19
 
-class Sustain(MicroKorgAbstractParameter):
+
+class Threshold(MicroKorgAbstractParameter):
     def __repr__(self):
-        return 'EG2 Sustain: %d' % self.value.intle
+        return 'HPFGate: %s' % self.value.intle
 
     def _check_value(self):
         if self.value.intle not in range(0, 128):
             raise ValueError('Parameter is out of range: %s' % self.value.intle)
 
     def _get_offset(self):
-        self.offset = 36
-        
-        
-class Release(MicroKorgAbstractParameter):
-    def __repr__(self):
-        return 'EG2 Release: %d' % self.value.intle
-
-    def _check_value(self):
-        if self.value.intle not in range(0, 128):
-            raise ValueError('Parameter is out of range: %s' % self.value.intle)
-
-    def _get_offset(self):
-        self.offset = 37
+        self.offset = 20

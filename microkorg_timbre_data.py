@@ -1,21 +1,35 @@
-from bitstring import BitStream, BitArray
-
-from microkorg_abstract import MicroKorgAbstractData
+from microkorg_abstract import MicroKorgAbstractData, SysExStream
 
 from timbre import *
 
 
 class MicroKorgTimbreData(MicroKorgAbstractData):
     def __init__(self, bitstream):
-        self.program_bitstream = BitStream(bitstream)
+        self.program_bitstream = SysExStream(bitstream)
 
         print 'GENERAL'
         #byte offset 0
         self.midi_channel = timbre.MidiChannel(self.read_bytes())
         print self.midi_channel
         #byte offset 1 !!!BITMAP
-        assign_mode, eg2_reset, eg1_reset, trigger_mode, key_priority = \
-            self.get_bmp1_values()
+
+    # def get_bmp1_values(self):
+    #     b = self.read_bytes()
+        key_priority = self.read_bits(2) #0,1
+        # key_priority = BitArray(bin='0b000000%s' % key_data)
+        self.read_bits() #2
+        trigger_mode = self.read_bits() #3
+        # trigger_mode = BitArray(bin='0b0000000%s' % trigger_data)
+        eg1_reset = self.read_bits() #4
+        # eg1_reset = BitArray(bin='0b0000000%s' % eg1_data)
+        eg2_reset = self.read_bits() #5
+        # eg2_reset = BitArray(bin='0b0000000%s' % eg2_data)
+        assign_mode = self.read_bits(2) #6,7
+        # assign_mode = BitArray(bin='0b000000%s' % assign_data)
+        # return assign_mode, eg2_reset, eg1_reset, \
+        #     trigger_mode, key_priority
+        # assign_mode, eg2_reset, eg1_reset, trigger_mode, key_priority = \
+        #     self.get_bmp1_values()
         self.assign_mode = timbre.AssignMode(assign_mode)
         self.eg2_reset = timbre.EG2Reset(eg2_reset)
         self.eg1_reset = timbre.EG1Reset(eg1_reset)
@@ -257,20 +271,7 @@ class MicroKorgTimbreData(MicroKorgAbstractData):
         #byte offset 52-107 (dummy)
         self.read_bytes(55)
 
-    def get_bmp1_values(self):
-        b = self.read_bytes()
-        key_data = b.bin[0:2]
-        key_priority = BitArray(bin='0b000000%s' % key_data)
-        trigger_data = b.bin[3]
-        trigger_mode = BitArray(bin='0b0000000%s' % trigger_data)
-        eg1_data = b.bin[4]
-        eg1_reset = BitArray(bin='0b0000000%s' % eg1_data)
-        eg2_data = b.bin[5]
-        eg2_reset = BitArray(bin='0b0000000%s' % eg2_data)
-        assign_data = b.bin[6:]
-        assign_mode = BitArray(bin='0b000000%s' % assign_data)
-        return assign_mode, eg2_reset, eg1_reset, \
-            trigger_mode, key_priority
+
 
     def get_osc1_wave(self):
         b = self.read_bytes()

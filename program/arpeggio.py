@@ -8,12 +8,13 @@ class TriggerLength(MicroKorgAbstractParameter):
         return 'ARP Trigger Length: %d Step' % (int(self.value.intle) + 1)
 
     def _check_value(self):
-        if self.value.intle not in range(0, 8):
-            raise ValueError('Parameter is out of range: %d' % self.value.intle)
+        if self.value not in range(0, 8):
+            raise ValueError('Parameter is out of range: %s' % self.value)
 
     def _get_offset(self):
         self.offset = 14
-        self.bits = range(0, 3)
+        self.bits = range(5, 7)
+        self.mask = range(0, 5)
 
 
 class TriggerPattern(MicroKorgAbstractParameter):

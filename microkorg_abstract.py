@@ -1,38 +1,24 @@
-import struct
-import traceback
-from bitstring import BitStream
-from byte_counter import ByteCounter
-
-bc = ByteCounter()
-
-
 class MicroKorgAbstractData():
+    def read_bits(self, number=1):
+        print 'Byte Position: %d' % self.program_bitstream.bytepos
+        return self.program_bitstream.read(number)
+
     def read_bytes(self, number=1):
-        bc.count(number)
-        return self.data.read(number)
-
-    def get_next_bytes(self, number=1):
-        byts = self.read_bytes(number)
-        fmt = '>'
-        for r in range(number):
-            fmt += 'b'
-        #e.g. fmt string might be '>bbb'
-        data = struct.unpack(fmt, byts)[0]
-        b = BitStream(intle=data, length=8*number)
-        return b
-
-    # def _get_binary_data(self, number=1):
-    #     byte = self.get_next_bytes(number)
-    #     b = BitArray(uint=byte, length=8)
-    #     return b.bin.zfill(8*number)
+        print 'Bit Position: %d' % self.program_bitstream.bitpos
+        return self.read_bits(number * 8)
 
 
 class MicroKorgAbstractParameter():
     def __init__(self, value):
         self.value = value
-        # self.mask = set()
         self._get_offset()
+        if hasattr(self, 'mask'):
+            self._mask()
         self._check_value()
+
+    def _mask(self):
+        for idx in self.mask:
+            self.value.overwrite('0b0', pos=(idx))
 
     def _check_value(self):
         raise NotImplementedError

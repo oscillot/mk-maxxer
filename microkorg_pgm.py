@@ -1,4 +1,3 @@
-import StringIO
 from bitstring import BitStream
 
 from microkorg_abstract import MicroKorgAbstractData
@@ -7,13 +6,14 @@ from microkorg_vocoder_data import MicroKorgVocoderData
 
 from program import *
 
+
 class MicroKorgPGM(MicroKorgAbstractData):
-    def __init__(self, data):
-        self.data = StringIO.StringIO(data)
+    def __init__(self, bitstream):
+        self.program_bitstream = BitStream(bitstream)
 
         print 'GENERAL'
         #bytes 0~11
-        self.program_name = self.read_bytes(12)
+        self.program_name = self.read_bytes(12).bytes
         print 'Program name: %s' % self.program_name
         #bytes 12,13 (dummy bytes)
         self.read_bytes(2)
@@ -26,7 +26,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print self.arp_trigger_length
         #byte 15
         self.arp_trigger_pattern = arpeggio.TriggerPattern(
-            self.get_next_bytes())
+            self.read_bytes())
         print self.arp_trigger_pattern
 
         #byte 16 !!!BITMAP
@@ -50,10 +50,10 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print self.delay_sync
         print self.delay_time_base
         #byte 20
-        self.delay_time = delay_fx.Time(self.get_next_bytes())
+        self.delay_time = delay_fx.Time(self.read_bytes())
         print self.delay_time
         #byte 21
-        self.delay_depth = delay_fx.Depth(self.get_next_bytes())
+        self.delay_depth = delay_fx.Depth(self.read_bytes())
         print self.delay_depth
         #byte 22
         self.delay_type = delay_fx.Type(self.get_delay_type())
@@ -62,10 +62,10 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print 'MOD FX'
         ##MOD FX
         #byte 23
-        self.mod_lfo_speed = mod_fx.LFOSpeed(self.get_next_bytes())
+        self.mod_lfo_speed = mod_fx.LFOSpeed(self.read_bytes())
         print self.mod_lfo_speed
         #byte 24
-        self.mod_depth = mod_fx.Depth(self.get_next_bytes())
+        self.mod_depth = mod_fx.Depth(self.read_bytes())
         print self.mod_depth
         #byte 25
         self.mod_type = mod_fx.Type(self.get_mod_type())
@@ -89,7 +89,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print 'ARPEGGIO'
         ##ARPEGGIO
         #byte 30 & 31
-        self.arp_tempo = arpeggio.Tempo(self.get_next_bytes(2))
+        self.arp_tempo = arpeggio.Tempo(self.read_bytes(2))
         print self.arp_tempo
         #byte 32 !!!BITMAP
         arp_on_off, arp_latch, arp_target, arp_key_sync = self.get_arp_bmp_32()
@@ -108,19 +108,19 @@ class MicroKorgPGM(MicroKorgAbstractData):
         print self.arp_type
         print self.arp_range
         #byte 34
-        self.arp_gate_time = arpeggio.GateTime(self.get_next_bytes())
+        self.arp_gate_time = arpeggio.GateTime(self.read_bytes())
         print self.arp_gate_time
         #byte 35
         self.arp_resolution = arpeggio.Resolution(self.get_arp_resolution())
         print self.arp_resolution
         #byte 36
-        self.arp_swing = arpeggio.Swing(self.get_next_bytes())
+        self.arp_swing = arpeggio.Swing(self.read_bytes())
         print self.arp_swing
 
         print 'KBD OCTAVE'
         ##KBD OCTAVE
         #byte 37
-        self.kbd_octave = kbd_octave.KeyboardOctave(self.get_next_bytes())
+        self.kbd_octave = kbd_octave.KeyboardOctave(self.read_bytes())
         print self.kbd_octave
 
         ###EITHER
@@ -128,36 +128,39 @@ class MicroKorgPGM(MicroKorgAbstractData):
             ##TIMBRE1 DATA
             #bytes 38-145
             print 'TIMBRE1'
-            self.timbre1 = MicroKorgTimbreData(data=self.data.read(107))
+            self.timbre1 = MicroKorgTimbreData(
+                bitstream=self.program_bitstream.read(107 * 8))
 
             if self.voice_mode.value.intle == 2: #i think??
                 ##TIMBRE2 DATA
                 #bytes 146-253
                 print 'TIMBRE2'
-                self.timbre2 = MicroKorgTimbreData(data=self.data.read(107))
+                self.timbre2 = MicroKorgTimbreData(
+                    bitstream=self.program_bitstream.read(107 * 8))
         ###OR
         elif self.voice_mode.value.intle == 3:
             ##VOCODER DATA
             #bytes 38-141
             print 'VOCODER'
-            self.vocoder = MicroKorgVocoderData(data=self.data.read(103))
+            self.vocoder = MicroKorgVocoderData(
+                bitstream=self.program_bitstream.read(103 * 8))
             #bytes 142-253 (dummy if vocoder)
-            self.data.read(111)
+            self.program_bitstream.read(111 * 8)
 
     def get_trigger_length_data(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         length_data = b.bin[0:3]
         trigger_length = BitStream(bin='0b00000%s' % length_data)
         return trigger_length
 
     def get_voice_mode(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         data = b.bin[4:6]
         voice_mode = BitStream(bin='0b000000%s' % data)
         return voice_mode
 
     def get_scale_key_and_type(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         key_data = b.bin[0:4]
         type_data = b.bin[4:]
         scale_key = BitStream(bin='0b0000%s' % key_data)
@@ -165,7 +168,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         return scale_key, scale_type
 
     def get_delay_sync_and_time_base(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         sync_data = b.bin[7]
         time_base_data = b.bin[0:3]
         delay_sync = BitStream(bin='0b0000000%s' % sync_data)
@@ -173,7 +176,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         return delay_sync, delay_time_base
 
     def get_arp_bmp_32(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         on_off_data = b.bin[7]
         latch_data = b.bin[6]
         target_data = b.bin[4:6]  # this says 4&5?
@@ -185,7 +188,7 @@ class MicroKorgPGM(MicroKorgAbstractData):
         return arp_on_off, latch, target, key_sync
 
     def get_arp_type_and_range(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         type_data = b.bin[0:3]
         range_data = b.bin[4:]
         arp_type = BitStream(bin='0b00000%s' % type_data)
@@ -193,31 +196,31 @@ class MicroKorgPGM(MicroKorgAbstractData):
         return arp_type, arp_range
 
     def get_delay_type(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         type_data = b.bin[0:2]
         delay_type = BitStream(bin='0b000000%s' % type_data)
         return delay_type
 
     def get_mod_type(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         type_data = b.bin[0:3]
         mod_type = BitStream(bin='0b00000%s' % type_data)
         return mod_type
 
     def get_freq(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         freq_data = b.bin[0:6]
         freq = BitStream(bin='0b00%s' % freq_data)
         return freq
 
     def get_gain(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         gain_data = b.bin[0:7]
         gain = BitStream(bin='0b0%s' % gain_data)
         return gain
 
     def get_arp_resolution(self):
-        b = self.get_next_bytes()
+        b = self.read_bytes()
         reso_data = b.bin[0:4]
         arp_reso = BitStream(bin='0b0000%s' % reso_data)
         return arp_reso

@@ -1,3 +1,4 @@
+from bitstring import BitStream
 from microkorg_abstract import MicroKorgAbstractParameter
 from constants import STATES, T12, plus_minus
 
@@ -109,8 +110,9 @@ class Tempo(MicroKorgAbstractParameter):
         return 'ARP Tempo: %s bpm (seq tempo)' % self.value.intle
 
     def _check_value(self):
-        #print self.value.bin
-        if self.value.intle not in range(0, 256): #another byte-only check,
+        # print dir(self.value)
+        # print help(self.value.overwrite)
+        if self.value.intbe not in range(0, 301): #another byte-only check,
         # spec says this but I keep getting zeroes:
         #+-----------+-------------------+-----------------------------------+
         #| ARPEGGIO |
@@ -118,11 +120,13 @@ class Tempo(MicroKorgAbstractParameter):
         #| 30 | tempo (MSB) | 20~300 |
         #| 31 | (LSB) | (SEQ tempo) |
         #+-----------+-------------------+-----------------------------------+
-            raise ValueError('Parameter is out of range: %d' % self.value.intle)
+            raise ValueError('Parameter is out of range: %s' % self.value
+                             .intbe)
 
     def _get_offset(self):
         self.offset = 30
-        self.bits = range(0, 16)
+        self.bits = range(8, 16)
+        self.mask = range(0, 8)
 
 
 class OnOff(MicroKorgAbstractParameter):
